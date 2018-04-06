@@ -6,9 +6,9 @@ public class CharacterMovementController : MonoBehaviour
 {
 
     public CharacterMovementData Data;
+    public float AngularVelocity = 0f;
 
     private Rigidbody2D rb;
-    private float angularVelocity = 0f;
     private int grounded = 0;
     private bool jumping = false;
     private float firstJumpTime;
@@ -27,7 +27,7 @@ public class CharacterMovementController : MonoBehaviour
             // first jump frame from the ground
             firstJumpTime = Time.time;
             jumping = true;
-            angularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
+            AngularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
 
             // basic impulse force
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
@@ -36,11 +36,11 @@ public class CharacterMovementController : MonoBehaviour
         // still in jump frames
         if (Input.GetButton("Jump") && jumping && (Time.time - firstJumpTime) < Data.JumpButtonDuration)
         {
-            angularVelocity = preJumpVelocity * Data.JumpVelocityLossCurve.Evaluate((Time.time - firstJumpTime) / Data.JumpButtonDuration);
+            AngularVelocity = preJumpVelocity * Data.JumpVelocityLossCurve.Evaluate((Time.time - firstJumpTime) / Data.JumpButtonDuration);
         }
 
-        angularVelocity = Mathf.Min(Data.MaxSpeed, angularVelocity + Data.Acceleration * Time.deltaTime);
-        transform.RotateAround(Vector3.zero, Vector3.forward, angularVelocity);
+        AngularVelocity = Mathf.Min(Data.MaxSpeed, AngularVelocity + Data.Acceleration * Time.deltaTime);
+        transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -50,7 +50,7 @@ public class CharacterMovementController : MonoBehaviour
             if (jumping && !(Input.GetButton("Jump") && (Time.time - firstJumpTime) < Data.JumpButtonDuration))
             {
                 jumping = false;
-                angularVelocity = preJumpVelocity;
+                AngularVelocity = preJumpVelocity;
             }
 
             grounded++;
@@ -69,7 +69,7 @@ public class CharacterMovementController : MonoBehaviour
         if (collision.collider.tag == "Ground")
         {
             grounded--;
-            preJumpVelocity = angularVelocity;
+            preJumpVelocity = AngularVelocity;
         }
 
         LightUp lightUp = collision.collider.GetComponent<LightUp>();
