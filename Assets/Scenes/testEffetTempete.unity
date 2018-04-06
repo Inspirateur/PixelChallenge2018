@@ -438,13 +438,23 @@ Prefab:
     - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
         type: 2}
       propertyPath: magnitudeAugmentationAChaqueNiveau
-      value: 4
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
         type: 2}
       propertyPath: tempete
       value: 
       objectReference: {fileID: 1592131893}
+    - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
+        type: 2}
+      propertyPath: augmentationNbVent
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
+        type: 2}
+      propertyPath: augmentationVitesse
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39e712500bffc6940a869f22ca17b17c, type: 2}
   m_IsPrefabParent: 0
