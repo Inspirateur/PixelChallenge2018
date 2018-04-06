@@ -9,6 +9,7 @@ public class CharacterMovementController : MonoBehaviour
     public float AngularVelocity = 0f;
 
     private Rigidbody2D rb;
+    private Animator animator;
     private int grounded = 0;
     private bool jumping = false;
     private float firstJumpTime;
@@ -17,6 +18,7 @@ public class CharacterMovementController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 	
 	void FixedUpdate ()
@@ -28,6 +30,7 @@ public class CharacterMovementController : MonoBehaviour
             firstJumpTime = Time.time;
             jumping = true;
             AngularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
+            animator.SetTrigger("TakeOff");
 
             // basic impulse force
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
@@ -38,6 +41,8 @@ public class CharacterMovementController : MonoBehaviour
         {
             AngularVelocity = preJumpVelocity * Data.JumpVelocityLossCurve.Evaluate((Time.time - firstJumpTime) / Data.JumpButtonDuration);
         }
+
+        animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
 
         AngularVelocity = Mathf.Min(Data.MaxSpeed, AngularVelocity + Data.Acceleration * Time.deltaTime);
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
@@ -50,6 +55,7 @@ public class CharacterMovementController : MonoBehaviour
             if (jumping && !(Input.GetButton("Jump") && (Time.time - firstJumpTime) < Data.JumpButtonDuration))
             {
                 jumping = false;
+                animator.SetTrigger("Landing");
                 AngularVelocity = preJumpVelocity;
             }
 
