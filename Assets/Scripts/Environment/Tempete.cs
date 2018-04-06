@@ -6,17 +6,26 @@ public class Tempete : MonoBehaviour {
 
 	public Transform ventPrefab;
 	public Transform eclairPrefab;
-	private GameObject player;
+	public float frequenceEclairMinInitial;
+	public float frequenceEclairMaxInitial;
+	public float ratioAugmentationFrequenceEclair;
+	public Transform grosEclairPrefab;
 
+	private GameObject player;
 	private static Tempete instance;
 	private Rigidbody rb;
 	private int indiceCercleActuel;
+	private float timerEclair;
+	private float frequenceEclairMin;
+	private float frequenceEclairMax;
 
 	void Awake(){
 		player = GameObject.FindGameObjectWithTag("Player");
 		instance = this;
 		rb = GetComponent<Rigidbody>();
 		indiceCercleActuel = -1;
+		frequenceEclairMin = frequenceEclairMinInitial * 1.0f + ratioAugmentationFrequenceEclair;
+		frequenceEclairMax = frequenceEclairMaxInitial * 1.0f + ratioAugmentationFrequenceEclair;
 	}
 
 	// Use this for initialization
@@ -26,6 +35,8 @@ public class Tempete : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		gererEclairBackground();
 
 		if(Input.GetKeyUp(KeyCode.V)){
 			ajouterVent();
@@ -52,7 +63,7 @@ public class Tempete : MonoBehaviour {
 		}
 	}
 
-	public static Tempete getInstance(){
+    public static Tempete getInstance(){
 		return instance;
 	}
 
@@ -63,14 +74,6 @@ public class Tempete : MonoBehaviour {
 		Quaternion quat = Quaternion.LookRotation((-toPlayer-2.0f*player.transform.forward).normalized, Vector3.up);
 
 		Instantiate(ventPrefab, player.transform.position, quat, this.transform.GetChild(indiceCercleActuel));
-
-		DigitalRuby.LightningBolt.LightningBoltScript eclair = 
-			Instantiate(eclairPrefab, player.transform.position, quat, this.transform)
-			.gameObject.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
-
-		eclair.StartPosition = this.transform.position;
-
-		eclair.EndPosition = player.transform.position;
 	}
 
 	public void augmenterVitesseRotation(){
@@ -94,6 +97,8 @@ public class Tempete : MonoBehaviour {
 			Destroy(this.transform.GetChild(i).gameObject);
 		}
 		indiceCercleActuel = -1;
+		frequenceEclairMin = frequenceEclairMinInitial * 1.0f + ratioAugmentationFrequenceEclair;
+		frequenceEclairMax = frequenceEclairMaxInitial * 1.0f + ratioAugmentationFrequenceEclair;
 		startNextCercle();
 	}
 
@@ -103,5 +108,31 @@ public class Tempete : MonoBehaviour {
 		GameObject cercle = new GameObject("Cercle_" + indiceCercleActuel);
 		cercle.transform.position = this.transform.position;
 		cercle.transform.parent = this.transform;
+		frequenceEclairMin *= 1.0f - ratioAugmentationFrequenceEclair;
+		frequenceEclairMax *= 1.0f - ratioAugmentationFrequenceEclair;
 	}
+
+	public void nextEclair(){
+
+		timerEclair = Time.time + frequenceEclairMin + (frequenceEclairMax - frequenceEclairMin) * Random.value;
+
+		DigitalRuby.LightningBolt.LightningBoltScript eclair = 
+			Instantiate(eclairPrefab, player.transform.position, Quaternion.identity, this.transform)
+			.gameObject.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
+
+		eclair.StartPosition = this.transform.position
+			+ new Vector3(10.0f, 0.0f, 0.0f) * (Random.value - 0.5f)
+			+ new Vector3(0.0f, 0.0f, 10.0f) * (Random.value - 0.5f);
+
+		eclair.EndPosition =
+			Quaternion.Euler(0.0f, 80.0f * (Random.value - 0.5f), 0.0f)
+			* (player.transform.position + player.transform.up * 10.0f * (Random.value - 0.5f));
+	}
+
+    private void gererEclairBackground()
+    {
+        if(Time.time >= timerEclair){
+			nextEclair();
+		}
+    }
 }
