@@ -16,7 +16,7 @@ public class CustomGravity : MonoBehaviour
 	
 	void FixedUpdate ()
     {
-        Vector3 centerVector = new Vector3(GravityData.Center.x, GravityData.Center.y) - transform.position;
+        Vector3 centerVector = (new Vector3(GravityData.Center.x, GravityData.Center.y) - transform.position).normalized;
 
         Vector2 forceToApply = centerVector * GravityData.Force * rb.mass;
         if (!GravityData.IsAttraction)
