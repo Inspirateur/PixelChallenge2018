@@ -4803,7 +4803,6 @@ GameObject:
   - component: {fileID: 2051340238}
   - component: {fileID: 2051340237}
   - component: {fileID: 2051340236}
-  - component: {fileID: 2051340242}
   m_Layer: 0
   m_Name: New Sprite
   m_TagString: Untagged
@@ -4857,7 +4856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df1ea21355f784499ec2154e13e0b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementData: {fileID: 11400000, guid: 89f31cfcb2ab1934687ec60a653bfe73, type: 2}
+  Data: {fileID: 11400000, guid: 89f31cfcb2ab1934687ec60a653bfe73, type: 2}
 --- !u!114 &2051340239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4921,24 +4920,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2051340235}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.000010935, y: -2.1373, z: -3.0981}
-  m_LocalScale: {x: 5.5892925, y: 5.5892906, z: 5.5892906}
+  m_LocalPosition: {x: -0.000010921, y: -3.96, z: -3.0981}
+  m_LocalScale: {x: 2.640613, y: 2.6406121, z: 2.6406121}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2051340242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2051340235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d06d4ad849f0e8a45b625501b0c03bfe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 23935eb61f6699347a639e2eb28eb502, type: 2}
 --- !u!1 &2057253275
 GameObject:
   m_ObjectHideFlags: 0
