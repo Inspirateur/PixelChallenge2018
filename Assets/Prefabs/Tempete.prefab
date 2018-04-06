@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4600920644169428}
   - component: {fileID: 114440503490056072}
   - component: {fileID: 54265781110701502}
+  - component: {fileID: 82010029102579008}
   m_Layer: 0
   m_Name: Tempete
   m_TagString: Untagged
@@ -56,6 +57,86 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &82010029102579008
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1863905762406318}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114440503490056072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,4 +150,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ventPrefab: {fileID: 4109518171867338, guid: df506259d1cba7c4582e0d57a198d86e, type: 2}
   eclairPrefab: {fileID: 4196223608899172, guid: e19d25fc228ce624a95f597bf473a1a0,
+    type: 2}
+  frequenceEclairMinInitial: 7
+  frequenceEclairMaxInitial: 14
+  ratioAugmentationFrequenceEclair: 0.4
+  sonEclair: {fileID: 8300000, guid: 3def7e0b4dce45348af6e3281481f342, type: 3}
+  delaisMinEntreTonnerre: 3.5
+  grosEclairPrefab: {fileID: 4807263234827876, guid: 0621688788974dc4dac9bff5b4f53685,
     type: 2}

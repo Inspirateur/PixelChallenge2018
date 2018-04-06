@@ -11,13 +11,15 @@ public class CustomGravity : MonoBehaviour
     
 	void Start ()
     {
-        rb = GetComponentInChildren<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
 	}
 	
 	void FixedUpdate ()
     {
-        Vector2 forceToApply = transform.position * GravityData.ForceValue * rb.mass * Time.deltaTime;
-        if (GravityData.IsAttraction)
+        Vector3 centerVector = new Vector3(GravityData.Center.x, GravityData.Center.y) - transform.position;
+
+        Vector2 forceToApply = centerVector * GravityData.Force * rb.mass;
+        if (!GravityData.IsAttraction)
         {
             forceToApply *= -1f;
         }
@@ -26,7 +28,7 @@ public class CustomGravity : MonoBehaviour
 
         if (GravityData.IsRotatedTowardsCenter)
         {
-            transform.Rotate(Vector3.forward, Vector3.SignedAngle(transform.up, -1f * transform.position, Vector3.forward));
+            transform.Rotate(Vector3.forward, Vector2.SignedAngle(transform.up, centerVector));
         }
 	}
 }

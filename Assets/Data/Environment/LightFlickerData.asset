@@ -8,8 +8,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3eb90087dd4863f4bb8a2bfca236ca2c, type: 3}
-  m_Name: JumpData
+  m_Script: {fileID: 11500000, guid: 04b7c49cb8f32a84f87eb78c91a5ec08, type: 3}
+  m_Name: LightFlickerData
   m_EditorClassIdentifier: 
-  JumpImpulseAcceleration: 40
-  JumpInputTime: 0.25
+  FlickerProbability: 0.95
+  FlickerFrequency: 2
+  OffTime: 1
