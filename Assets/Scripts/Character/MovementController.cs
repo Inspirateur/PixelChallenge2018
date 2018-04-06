@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour {
-    
-	void Start ()
-    {
-		
+    bool onDash;
+
+	void Start () {
+        onDash = false;
 	}
 	
-	void Update ()
-    {
-		
-	}
+	void Update () {
+        if (!onDash) {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                onDash = true;
+            }
+        }
+    }
 }
