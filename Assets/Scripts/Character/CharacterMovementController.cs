@@ -55,6 +55,13 @@ public class CharacterMovementController : MonoBehaviour
 
             grounded++;
         }
+
+        LightUp lightUp = collision.collider.GetComponent<LightUp>();
+
+        if (lightUp != null)
+        {
+            lightUp.SwitchOn();
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -63,6 +70,13 @@ public class CharacterMovementController : MonoBehaviour
         {
             grounded--;
             preJumpVelocity = angularVelocity;
+        }
+
+        LightUp lightUp = collision.collider.GetComponent<LightUp>();
+
+        if (lightUp != null)
+        {
+            lightUp.SwitchOff();
         }
     }
 }
