@@ -55,7 +55,10 @@ public class GameManager : MonoBehaviour {
 
 
 			magnitudeVitessePrecedent = getVitesseJoueur ();
-		}
+
+            Color c = Color.HSVToRGB(getVitesseJoueur() / magnitudeVitesseObjectif, 1, 1);
+            Circles[currentCircle].CircleColor = c;
+        }
 
 		if(this.magnitudeVitesseObjectif<=this.getVitesseJoueur()){
 			skipLevel ();
