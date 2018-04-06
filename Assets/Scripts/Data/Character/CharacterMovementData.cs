@@ -9,10 +9,10 @@ public class CharacterMovementData : ScriptableObject
     public float MaxSpeed = 2f;
 
     // The instantaneous jump acceleration
-    public float JumpImpulseAcceleration = 40;
+    public float JumpImpulseAcceleration = 10;
 
-    // Time during which helding down jump button highten the jump
-    public float JumpInputTime = 0.25f;
+    // The jump button duration
+    public float JumpButtonDuration = 0.5f;
 
-    public float JumpVelocityLoss = 0.1f;
+    public AnimationCurve JumpVelocityLossCurve;
 }

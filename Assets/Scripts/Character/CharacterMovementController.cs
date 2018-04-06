@@ -12,11 +12,11 @@ public class CharacterMovementController : MonoBehaviour
     private int grounded = 0;
     private bool jumping = false;
     private float firstJumpTime;
+    private float preJumpVelocity;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        firstJumpTime = -Data.JumpInputTime;
     }
 	
 	void FixedUpdate ()
@@ -27,37 +27,33 @@ public class CharacterMovementController : MonoBehaviour
             // first jump frame from the ground
             firstJumpTime = Time.time;
             jumping = true;
-            angularVelocity = Mathf.Max(angularVelocity - Data.JumpVelocityLoss, 0f);
-        }
-        if (Time.time < firstJumpTime + Data.JumpInputTime)
-        {
-            // still in jump frames
-            if (Input.GetButtonUp("Jump"))
-            {
-                // stop jumping because the player said so
-                jumping = false;
-            }
-        }
-        else
-        {
-            // stop jumping because the jump input time is over
-            jumping = false;
+            angularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
+
+            // basic impulse force
+            rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
         }
 
-        if (jumping)
+        // still in jump frames
+        if (Input.GetButton("Jump") && jumping && (Time.time - firstJumpTime) < Data.JumpButtonDuration)
         {
-            rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass);
+            angularVelocity = preJumpVelocity * Data.JumpVelocityLossCurve.Evaluate((Time.time - firstJumpTime) / Data.JumpButtonDuration);
         }
 
         angularVelocity = Mathf.Min(Data.MaxSpeed, angularVelocity + Data.Acceleration * Time.deltaTime);
         transform.RotateAround(Vector3.zero, Vector3.forward, angularVelocity);
+        Debug.Log(angularVelocity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Ground")
         {
-            jumping = false;
+            if (jumping && !(Input.GetButton("Jump") && (Time.time - firstJumpTime) < Data.JumpButtonDuration))
+            {
+                jumping = false;
+                angularVelocity = preJumpVelocity;
+            }
+
             grounded++;
         }
     }
@@ -67,6 +63,7 @@ public class CharacterMovementController : MonoBehaviour
         if (collision.collider.tag == "Ground")
         {
             grounded--;
+            preJumpVelocity = angularVelocity;
         }
     }
 }
