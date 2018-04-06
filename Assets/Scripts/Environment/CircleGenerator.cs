@@ -12,6 +12,22 @@ public class CircleGenerator : MonoBehaviour {
     private int objectNbr = -1;
     private float objectDistance = -1;
 
+    public Color CircleColor
+    {
+        set
+        {
+            foreach (Transform t in transform)
+            {
+                SpriteRenderer rend = t.GetComponent<SpriteRenderer>();
+                if (rend != null)
+                {
+                    rend.material.SetColor("_Color", value);
+                }
+            }
+
+        }
+    }
+
 	// Update is called once per frame
 	void Update () {
 		if (ObjectDistance != objectDistance || ObjectNbr != objectNbr)
@@ -31,7 +47,7 @@ public class CircleGenerator : MonoBehaviour {
                 Vector3 pos =  transform.position 
                     + Quaternion.AngleAxis(i * 360.0f / ObjectNbr, Vector3.forward) * new Vector3(ObjectDistance, 0, 0);
                 Quaternion rot = Quaternion.LookRotation(Vector3.forward, pos - transform.position);
-                Instantiate(Object, pos, rot, transform);
+                GameObject obj = Instantiate(Object, pos, rot, transform);
             }
 
             objectNbr = ObjectNbr;
