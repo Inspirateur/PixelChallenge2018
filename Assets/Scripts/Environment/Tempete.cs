@@ -89,7 +89,7 @@ public class Tempete : MonoBehaviour {
 	}
 
 	public void augmenterVitesseRotation(){
-		rb.AddTorque(0.0f, 0.0f, -10.0f, ForceMode.Acceleration);
+		rb.AddTorque(0.0f, 0.0f, 5.0f, ForceMode.Acceleration);
 	}
 
 	public void supprimerVent(){
@@ -100,7 +100,7 @@ public class Tempete : MonoBehaviour {
 	}
 
 	public void diminuerVitesseRotation(){
-		rb.AddTorque(0.0f, 0.0f, 10.0f, ForceMode.Acceleration);
+		rb.AddTorque(0.0f, 0.0f, -5.0f, ForceMode.Acceleration);
 	}
 
 	public void resetTempete(){
