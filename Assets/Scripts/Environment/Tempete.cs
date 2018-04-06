@@ -4,33 +4,45 @@ using UnityEngine;
 
 public class Tempete : MonoBehaviour {
 
+	[Header("Vent")]
 	public Transform ventPrefab;
+
+	[Header("Eclairs du background")]
 	public Transform eclairPrefab;
 	public float frequenceEclairMinInitial;
 	public float frequenceEclairMaxInitial;
 	public float ratioAugmentationFrequenceEclair;
+	public AudioClip sonEclair;
+	public float delaisMinEntreTonnerre;
+	
+	[Header("Eclairs du passage de niveau")]
 	public Transform grosEclairPrefab;
+	public AudioClip sonGrosEclair;
 
 	private GameObject player;
 	private static Tempete instance;
 	private Rigidbody rb;
+	private AudioSource audioSource;
 	private int indiceCercleActuel;
 	private float timerEclair;
 	private float frequenceEclairMin;
 	private float frequenceEclairMax;
+	private float timerSonEclair;
 
 	void Awake(){
 		player = GameObject.FindGameObjectWithTag("Player");
 		instance = this;
 		rb = GetComponent<Rigidbody>();
-		indiceCercleActuel = -1;
-		frequenceEclairMin = frequenceEclairMinInitial * 1.0f + ratioAugmentationFrequenceEclair;
-		frequenceEclairMax = frequenceEclairMaxInitial * 1.0f + ratioAugmentationFrequenceEclair;
+		audioSource = GetComponent<AudioSource>();
+		indiceCercleActuel = 0;
+		frequenceEclairMin = frequenceEclairMinInitial;
+		frequenceEclairMax = frequenceEclairMaxInitial;
+		timerEclair = Time.time + frequenceEclairMin;
 	}
 
 	// Use this for initialization
 	void Start () {
-		startNextCercle();
+		initNewCercle();
 	}
 	
 	// Update is called once per frame
@@ -96,23 +108,34 @@ public class Tempete : MonoBehaviour {
 		for(int i=this.transform.childCount-1; i>=0; i--){
 			Destroy(this.transform.GetChild(i).gameObject);
 		}
-		indiceCercleActuel = -1;
-		frequenceEclairMin = frequenceEclairMinInitial * 1.0f + ratioAugmentationFrequenceEclair;
-		frequenceEclairMax = frequenceEclairMaxInitial * 1.0f + ratioAugmentationFrequenceEclair;
-		startNextCercle();
+		indiceCercleActuel = 0;
+		frequenceEclairMin = frequenceEclairMinInitial;
+		frequenceEclairMax = frequenceEclairMaxInitial;
+		initNewCercle();
 	}
 
 	public void startNextCercle(){
 		indiceCercleActuel++;
 		player.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
+		initNewCercle();
+		frequenceEclairMin *= 1.0f - ratioAugmentationFrequenceEclair;
+		frequenceEclairMax *= 1.0f - ratioAugmentationFrequenceEclair;
+		lancerGrosEclair();
+	}
+
+	private void initNewCercle(){
 		GameObject cercle = new GameObject("Cercle_" + indiceCercleActuel);
 		cercle.transform.position = this.transform.position;
 		cercle.transform.parent = this.transform;
-		frequenceEclairMin *= 1.0f - ratioAugmentationFrequenceEclair;
-		frequenceEclairMax *= 1.0f - ratioAugmentationFrequenceEclair;
 	}
 
 	public void nextEclair(){
+
+		if(Time.time >= timerSonEclair){
+			audioSource.pitch = 1.2f + (Random.value - 0.5f) * 0.3f;
+			audioSource.PlayOneShot(sonEclair, 0.1f);
+			timerSonEclair = Time.time + delaisMinEntreTonnerre;
+		}
 
 		timerEclair = Time.time + frequenceEclairMin + (frequenceEclairMax - frequenceEclairMin) * Random.value;
 
@@ -135,4 +158,18 @@ public class Tempete : MonoBehaviour {
 			nextEclair();
 		}
     }
+
+	private void lancerGrosEclair(){
+
+		audioSource.pitch = 1.0f;
+		audioSource.PlayOneShot(sonGrosEclair, 1.0f);
+
+		DigitalRuby.LightningBolt.LightningBoltScript eclair = 
+			Instantiate(grosEclairPrefab, player.transform.position, Quaternion.identity, this.transform)
+			.gameObject.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
+
+		eclair.StartPosition = this.transform.position;
+
+		eclair.EndPosition = player.transform.position;
+	}
 }
