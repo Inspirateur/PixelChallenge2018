@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public CharacterMovementController player;
 
+    public CircleGenerator[] Circles;
+    private int currentCircle = 0;
 
 	public float magnitudeAugmentationAChaqueNiveau;
 	private float magnitudeVitesseObjectif;
@@ -65,7 +67,8 @@ public class GameManager : MonoBehaviour {
 		Debug.Log ("SkipLevel");
 		tempete.startNextCercle ();
 		initVariable ();
-
+        Circles[currentCircle].gameObject.SetActive(false);
+        currentCircle++;
 	}
 
 
