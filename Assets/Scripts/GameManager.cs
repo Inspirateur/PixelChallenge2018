@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void skipLevel(){
-		Debug.Log ("SkipLevel");
 		tempete.startNextCercle ();
 		initVariable ();
         Circles[currentCircle].gameObject.SetActive(false);
