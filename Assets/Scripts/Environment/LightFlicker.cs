@@ -2,31 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightFlicker : MonoBehaviour {
+public class LightFlicker : MonoBehaviour
+{
 
-    public SpriteRenderer LightSprite;
+    private SpriteRenderer sprite;
 
     public LightFlickerData Data;
 
+    private Color emissiveColor;
+
     private void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
+        emissiveColor = sprite.material.GetColor("_EmissionColor");
         SwitchOn();
     }
 
     private void SwitchOn()
     {
-        LightSprite.color = new Color(1, 1, 1, 1);
-        if (Random.Range(0.0f,1.0f) <= Data.FlickerProbability)
+        sprite.material.SetColor("_EmissionColor", emissiveColor);
+        //sprite.color = new Color(1, 1, 1, 1);
+        if (Random.Range(0.0f, 1.0f) <= Data.FlickerProbability)
         {
             Invoke("SwitchOff", Data.FlickerFrequency);
-        } else
+        }
+        else
         {
             Invoke("SwitchOn", Data.FlickerFrequency);
         }
     }
 
-    private void SwitchOff() {
-        LightSprite.color = new Color(0, 0, 0, 0);
+    private void SwitchOff()
+    {
+        //sprite.color = new Color(0, 0, 0, 0);
+
+        sprite.material.SetColor("_EmissionColor", new Color(0, 0, 0, 0));
         Invoke("SwitchOn", Data.OffTime);
     }
 }
