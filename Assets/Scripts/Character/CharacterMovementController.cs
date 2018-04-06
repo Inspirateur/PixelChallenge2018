@@ -41,7 +41,6 @@ public class CharacterMovementController : MonoBehaviour
 
         angularVelocity = Mathf.Min(Data.MaxSpeed, angularVelocity + Data.Acceleration * Time.deltaTime);
         transform.RotateAround(Vector3.zero, Vector3.forward, angularVelocity);
-        Debug.Log(angularVelocity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
