@@ -13,22 +13,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Acceleration: 0.2
   MaxSpeed: 2
-  JumpImpulseAcceleration: 10
-  JumpInputTime: 0.3
+  JumpImpulseAcceleration: 6
+  JumpButtonDuration: 0.5
   JumpVelocityLossCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0.5
-      inSlope: 3.6774936
-      outSlope: 3.6774936
-      tangentMode: 0
+      value: 1
+      inSlope: -13.250709
+      outSlope: Infinity
+      tangentMode: 97
     - serializedVersion: 2
       time: 0.3
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: Infinity
+      outSlope: -3.2341805
+      tangentMode: 7
+    - serializedVersion: 2
+      time: 1
+      value: 0.25
+      inSlope: -0.013553536
+      outSlope: -0.013553536
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
