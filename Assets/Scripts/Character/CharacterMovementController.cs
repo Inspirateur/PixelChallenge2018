@@ -8,10 +8,15 @@ public class CharacterMovementController : MonoBehaviour
     public CharacterMovementData Data;
     public float AngularVelocity = 0f;
 
+    public CapsuleCollider2D StandUpCollider;
+    public CapsuleCollider2D SlidingCollider;
+
     private Rigidbody2D rb;
     private Animator animator;
+
     private int grounded = 0;
-    private bool jumping = false;
+    private bool isJumping = false;
+    private bool isSliding = false;
     private float firstJumpTime;
     private float preJumpVelocity;
 
@@ -24,11 +29,11 @@ public class CharacterMovementController : MonoBehaviour
 	void FixedUpdate ()
     {
 
-        if (Input.GetButtonDown("Jump") && grounded > 0 && !jumping)
+        if (Input.GetButtonDown("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
             // first jump frame from the ground
             firstJumpTime = Time.time;
-            jumping = true;
+            isJumping = true;
             AngularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
             animator.SetTrigger("TakeOff");
 
@@ -36,15 +41,34 @@ public class CharacterMovementController : MonoBehaviour
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
         }
 
+        if (Input.GetButtonDown("Slide") && grounded > 0 && !isJumping && !isSliding)
+        {
+            isSliding = true;
+            StandUpCollider.enabled = false;
+            SlidingCollider.enabled = true;
+            animator.SetTrigger("Slide");
+        }
+
+        if (Input.GetButtonUp("Slide"))
+        {
+            isSliding = true;
+            StandUpCollider.enabled = true;
+            SlidingCollider.enabled = false;
+            animator.SetTrigger("GetUp");
+        }
+
         // still in jump frames
-        if (Input.GetButton("Jump") && jumping && (Time.time - firstJumpTime) < Data.JumpButtonDuration)
+        if (Input.GetButton("Jump") && isJumping && (Time.time - firstJumpTime) < Data.JumpButtonDuration)
         {
             AngularVelocity = preJumpVelocity * Data.JumpVelocityLossCurve.Evaluate((Time.time - firstJumpTime) / Data.JumpButtonDuration);
         }
 
         animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
 
-        AngularVelocity = Mathf.Min(Data.MaxSpeed, AngularVelocity + Data.Acceleration * Time.deltaTime);
+        if (!(isSliding || isJumping))
+        {
+            AngularVelocity = Mathf.Min(Data.MaxSpeed, AngularVelocity + Data.Acceleration * Time.deltaTime);
+        }
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
     }
 
@@ -52,9 +76,9 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
-            if (jumping && !(Input.GetButton("Jump") && (Time.time - firstJumpTime) < Data.JumpButtonDuration))
+            if (isJumping && !(Input.GetButton("Jump") && (Time.time - firstJumpTime) < Data.JumpButtonDuration))
             {
-                jumping = false;
+                isJumping = false;
                 animator.SetTrigger("Landing");
                 AngularVelocity = preJumpVelocity;
             }
