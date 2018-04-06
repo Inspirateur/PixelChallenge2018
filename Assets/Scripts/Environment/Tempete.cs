@@ -83,13 +83,13 @@ public class Tempete : MonoBehaviour {
 
 		Vector3 toPlayer = (this.transform.position - player.transform.position).normalized;
 
-		Quaternion quat = Quaternion.LookRotation((-toPlayer-2.0f*player.transform.forward).normalized, Vector3.up);
+		Quaternion quat = Quaternion.LookRotation((-toPlayer-2.0f*player.transform.right).normalized, Vector3.forward);
 
 		Instantiate(ventPrefab, player.transform.position, quat, this.transform.GetChild(indiceCercleActuel));
 	}
 
 	public void augmenterVitesseRotation(){
-		rb.AddTorque(0.0f, -10.0f, 0.0f, ForceMode.Acceleration);
+		rb.AddTorque(0.0f, 0.0f, 5.0f, ForceMode.Acceleration);
 	}
 
 	public void supprimerVent(){
@@ -100,7 +100,7 @@ public class Tempete : MonoBehaviour {
 	}
 
 	public void diminuerVitesseRotation(){
-		rb.AddTorque(0.0f, 10.0f, 0.0f, ForceMode.Acceleration);
+		rb.AddTorque(0.0f, 0.0f, -5.0f, ForceMode.Acceleration);
 	}
 
 	public void resetTempete(){
@@ -116,7 +116,7 @@ public class Tempete : MonoBehaviour {
 
 	public void startNextCercle(){
 		indiceCercleActuel++;
-		player.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
+//		player.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
 		initNewCercle();
 		frequenceEclairMin *= 1.0f - ratioAugmentationFrequenceEclair;
 		frequenceEclairMax *= 1.0f - ratioAugmentationFrequenceEclair;
@@ -145,11 +145,11 @@ public class Tempete : MonoBehaviour {
 
 		eclair.StartPosition = this.transform.position
 			+ new Vector3(10.0f, 0.0f, 0.0f) * (Random.value - 0.5f)
-			+ new Vector3(0.0f, 0.0f, 10.0f) * (Random.value - 0.5f);
+			+ new Vector3(0.0f, 10.0f, 0.0f) * (Random.value - 0.5f);
 
 		eclair.EndPosition =
-			Quaternion.Euler(0.0f, 80.0f * (Random.value - 0.5f), 0.0f)
-			* (player.transform.position + player.transform.up * 10.0f * (Random.value - 0.5f));
+			Quaternion.Euler(0.0f, 0.0f, 80.0f * (Random.value - 0.5f))
+			* (player.transform.position + player.transform.forward * 10.0f * (Random.value - 0.5f));
 	}
 
     private void gererEclairBackground()
