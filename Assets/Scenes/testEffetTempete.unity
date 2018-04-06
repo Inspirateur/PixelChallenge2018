@@ -259,12 +259,6 @@ Transform:
   m_Father: {fileID: 1668768052}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
---- !u!114 &1592131893 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114440503490056072, guid: a9044e8f82ef0554e852b003911cc972,
-    type: 2}
-  m_PrefabInternal: {fileID: 1861282127}
-  m_Script: {fileID: 11500000, guid: 1c10b0cf2aa87a84196dc56baa06f7b0, type: 3}
 --- !u!1 &1668768048
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,27 +389,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4359392274111156, guid: 39e712500bffc6940a869f22ca17b17c, type: 2}
       propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
-        type: 2}
-      propertyPath: magnitudeAugmentationAChaqueNiveau
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
-        type: 2}
-      propertyPath: tempete
-      value: 
-      objectReference: {fileID: 1592131893}
-    - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
-        type: 2}
-      propertyPath: augmentationNbVent
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 114976856337486310, guid: 39e712500bffc6940a869f22ca17b17c,
-        type: 2}
-      propertyPath: augmentationVitesse
-      value: 20
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 39e712500bffc6940a869f22ca17b17c, type: 2}

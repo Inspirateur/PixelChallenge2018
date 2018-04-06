@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	public float maginitudeVitesseJoueurTemp;
+	public CharacterMovementController player;
+
 
 	public float magnitudeAugmentationAChaqueNiveau;
-	public float magnitudeVitesseObjectif;
-	public float magnitudeVitessePrecedent;
-	public float ecartVitesseDebutAObjectif;
+	private float magnitudeVitesseObjectif;
+	private float magnitudeVitessePrecedent;
+	private float ecartVitesseDebutAObjectif;
 
 	private Tempete tempete;
 
 	public float augmentationNbVent;
 	public float augmentationVitesse;
 
-	public float diviseurAugmentationNbVent;
-	public float diviseurAugmentationVitesse;
+	private float diviseurAugmentationNbVent;
+	private float diviseurAugmentationVitesse;
 
-	public float diviseurActuelAugmentationNbVent;
-	public float diviseurActuelAugmentationVitesse;
+	private float diviseurActuelAugmentationNbVent;
+	private float diviseurActuelAugmentationVitesse;
 
-	public int compteurActuelNbVent;
-	public int compteurActuelVitesse;
+	private int compteurActuelNbVent;
+	private int compteurActuelVitesse;
 
 
 
@@ -37,9 +38,6 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetKeyUp (KeyCode.U)) {
-			maginitudeVitesseJoueurTemp +=0.1f;
-		}
 
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			Debug.Log ("up");
@@ -72,7 +70,7 @@ public class GameManager : MonoBehaviour {
 
 
 	private float getVitesseJoueur(){
-		return maginitudeVitesseJoueurTemp;
+		return player.AngularVelocity;
 	}
 
 	private void spawnVent(int nb){
@@ -80,7 +78,7 @@ public class GameManager : MonoBehaviour {
 		if(compteurActuelNbVent>augmentationNbVent){
 			nb -= compteurActuelNbVent - (int)augmentationNbVent;
 		}
-		Debug.Log ("dddddd"+nb);
+		Debug.Log ("Augmentation Nombre vent"+nb);
 		for(int i=0;i<nb;i++){
 			tempete.ajouterVent ();
 		}
@@ -91,7 +89,7 @@ public class GameManager : MonoBehaviour {
 		if(compteurActuelNbVent>augmentationNbVent){
 			nb -= compteurActuelVitesse - (int)augmentationVitesse;
 		}
-
+		Debug.Log ("Augmentation Vitesse Vent"+nb);
 		for(int i=0;i<nb;i++){
 			tempete.augmenterVitesseRotation ();
 		}
