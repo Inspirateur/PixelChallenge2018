@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour {
 
 
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
-			Debug.Log ("up");
+			//Debug.Log ("up");
 			float variation = getVitesseJoueur () - magnitudeVitessePrecedent;
 
 			diviseurActuelAugmentationNbVent += (variation / diviseurAugmentationNbVent);
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour {
 		if(compteurActuelNbVent>augmentationNbVent){
 			nb -= compteurActuelNbVent - (int)augmentationNbVent;
 		}
-		Debug.Log ("Augmentation Nombre vent"+nb);
+		//Debug.Log ("Augmentation Nombre vent"+nb);
 		for(int i=0;i<nb;i++){
 			tempete.ajouterVent ();
 		}
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour {
 		if(compteurActuelNbVent>augmentationNbVent){
 			nb -= compteurActuelVitesse - (int)augmentationVitesse;
 		}
-		Debug.Log ("Augmentation Vitesse Vent"+nb);
+		//Debug.Log ("Augmentation Vitesse Vent"+nb);
 		for(int i=0;i<nb;i++){
 			tempete.augmenterVitesseRotation ();
 		}
