@@ -16,7 +16,7 @@ public class CustomGravity : MonoBehaviour
 	
 	void FixedUpdate ()
     {
-        Vector2 forceToApply = transform.position * GravityData.ForceValue * rb.mass;
+        Vector2 forceToApply = transform.position * GravityData.ForceValue * rb.mass * Time.deltaTime;
         if (GravityData.IsAttraction)
         {
             forceToApply *= -1f;
