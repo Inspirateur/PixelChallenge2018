@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour {
 
 	private Camera cam;
 
-
+	public float time;
+	private GameController gameController;
 
 
 
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour {
 		tempete = Tempete.getInstance ();
 		initVariable ();
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		time = 0;
 
 	}
 	
@@ -52,6 +55,7 @@ public class GameManager : MonoBehaviour {
 		// Debug.Log(player.AngularVelocity);
 
 		if(!gameover){
+			time += Time.deltaTime;
 			UpdateGame();
 		} else {
 			UpdateEndGame();
@@ -209,4 +213,10 @@ public class GameManager : MonoBehaviour {
 		Circles[currentCircle].CleanWalls();
 		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 	}
+
+	public void setScore(){
+		gameController.submitPlayerScoring ((int)time); 
+	}
+   
+
 }
