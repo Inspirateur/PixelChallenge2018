@@ -84,7 +84,8 @@ public class CharacterMovementController : MonoBehaviour
 
     private void FixedUpdateGame(){
         
-        if (Input.GetButton("Jump")){
+        if (Input.GetButton("Jump") && comboEnable)
+        {
             if(grounded > 0 && !isJumping && !isSliding)
             {
                 AudioSource.PlayClipAtPoint(Data.JumpSound, transform.position);
