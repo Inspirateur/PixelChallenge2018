@@ -15,4 +15,7 @@ public class CharacterMovementData : ScriptableObject
     public float JumpButtonDuration = 0.5f;
 
     public AnimationCurve JumpVelocityLossCurve;
+
+    // The slide duration
+    public float SlideMaxDuration = 1f;
 }
