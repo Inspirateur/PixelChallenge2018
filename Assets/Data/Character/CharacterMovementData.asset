@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: CharacterMovementData
   m_EditorClassIdentifier: 
   Acceleration: 0.2
-  MaxSpeed: 2
+  MaxSpeed: 1
   JumpImpulseAcceleration: 5
   JumpButtonDuration: 0.5
   JumpVelocityLossCurve:
@@ -28,11 +28,11 @@ MonoBehaviour:
       time: 0.3
       value: 1
       inSlope: Infinity
-      outSlope: -3.2341805
+      outSlope: -1.451613
       tangentMode: 7
     - serializedVersion: 2
       time: 1
-      value: 0.25
+      value: 0.5
       inSlope: -0.013553536
       outSlope: -0.013553536
       tangentMode: 0
