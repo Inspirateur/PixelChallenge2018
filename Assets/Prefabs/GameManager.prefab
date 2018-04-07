@@ -52,6 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  magnitudeAugmentationAChaqueNiveau: 2
-  augmentationNbVent: 100
-  augmentationVitesse: 100
+  Circles:
+  - {fileID: 0}
+  - {fileID: 0}
+  augmentationNbVent: 15
+  augmentationVitesse: 15
