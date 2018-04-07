@@ -11,6 +11,7 @@ public class CircleGenerator : MonoBehaviour {
 
     private int objectNbr = -1;
     private float objectDistance = -1;
+    private GameObject currObject;
 
     public Color CircleColor
     {
@@ -22,15 +23,22 @@ public class CircleGenerator : MonoBehaviour {
                 if (rend != null)
                 {
                     rend.material.SetColor("_Color", value);
+                } else
+                {
+                    ParticleSystem sys = t.GetComponent<ParticleSystem>();
+                    if (sys != null)
+                    {
+                        sys.GetComponent<Renderer>().material.SetColor("_Color", value);
+                    }
                 }
             }
 
         }
     }
 
-	// Update is called once per frame
-	void Update () {
-		if (ObjectDistance != objectDistance || ObjectNbr != objectNbr)
+    // Update is called once per frame
+    void Update() {
+        if (ObjectDistance != objectDistance || ObjectNbr != objectNbr || currObject != Object)
         {
             LinkedList<Transform> children = new LinkedList<Transform>();
             foreach (Transform child in transform)
@@ -52,6 +60,7 @@ public class CircleGenerator : MonoBehaviour {
 
             objectNbr = ObjectNbr;
             objectDistance = ObjectDistance;
+            currObject = Object;
         }
 	}
 }

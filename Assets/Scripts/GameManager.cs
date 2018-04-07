@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public CharacterMovementController player;
 
+    public GameObject ExplosionPrefab;
+
     public CircleGenerator[] Circles;
     private int currentCircle = 0;
 
@@ -56,8 +58,15 @@ public class GameManager : MonoBehaviour {
 
 
 		}
+
+        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+			timer = Time.time+2;
+			//Debug.Log ("END");
+			skipLevel ();
+
+		}    
         
-        // init circles color
+        // set circles color
         for (int i = 0; i < Circles.Length; ++i)
         {
             if (i < currentCircle)
@@ -79,15 +88,6 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
-			timer = Time.time+2;
-			//Debug.Log ("END");
-			skipLevel ();
-
-		}
-	
-
-
 	}
 
 	private void skipLevel(){
@@ -95,7 +95,9 @@ public class GameManager : MonoBehaviour {
 		tempete.startNextCercle ();
 		initVariable ();
 		modifierVitesseAngulaireMax();
-        Circles[currentCircle].gameObject.SetActive(false);
+        
+        Circles[currentCircle].ObjectNbr /= 4;
+        Circles[currentCircle].Object = ExplosionPrefab;
         currentCircle++;
 	}
 
