@@ -875,6 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 89f31cfcb2ab1934687ec60a653bfe73, type: 2}
+  GravityData: {fileID: 11400000, guid: 5b2858cc87b688d448ffe4cb9abf8e15, type: 2}
   AngularVelocity: 0
   AngularVelocityMax: 0
   AccelerationMax: 0

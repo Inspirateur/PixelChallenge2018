@@ -68,7 +68,7 @@ public class CameraBehaviour : MonoBehaviour {
 		Vector3 posDesire = Vector3.zero;
 		posDesire.z -= distanceFocusDesiree + initial;
 
-		Vector3 pos = Vector3.SmoothDamp (this.transform.position, posDesire, ref velocityEnd, 1.0f, 1.0f);
+		Vector3 pos = Vector3.SmoothDamp (this.transform.position, posDesire, ref velocityEnd, 1.0f);
 
 		this.transform.position = pos;
 	}

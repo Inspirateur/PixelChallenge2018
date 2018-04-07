@@ -50,6 +50,6 @@ public class WallGenerator : Neon {
 
     virtual protected float ComputeHeight()
     {
-        return 3 + (circle_nb - 1) * 4 - (float)height / 12f;
+        return 4f + (circle_nb - 1) * 4 - (float)height / 12f;
     }
 }
