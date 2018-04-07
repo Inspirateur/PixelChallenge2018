@@ -12,6 +12,8 @@ public class CameraBehaviour : MonoBehaviour {
 	private float initial;
 	private Vector3 posInitial;
 
+    public bool FollowPlayer = false;
+
 	// Use this for initialization
 	void Start () {
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
@@ -26,7 +28,7 @@ public class CameraBehaviour : MonoBehaviour {
 
 	void LateUpdate(){
 		
-		if(!gm.gameover){
+		if(!gm.gameover && FollowPlayer){
 			UpdateGame();
 		} else {
 			UpdateEndGame();
@@ -42,6 +44,9 @@ public class CameraBehaviour : MonoBehaviour {
 		pos.z = Mathf.SmoothDamp (this.transform.position.z, gm.getPercent () * (-distanceFocusDesiree) + initial, ref velocity, 0.3f);
 
 		this.transform.position = pos;
+        Vector3 rot = this.transform.eulerAngles;
+        rot.z = 0;
+        this.transform.rotation = Quaternion.Euler(rot);
 	}
 
 	private void UpdateEndGame(){

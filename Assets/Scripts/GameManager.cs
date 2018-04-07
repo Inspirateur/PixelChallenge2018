@@ -113,6 +113,12 @@ public class GameManager : MonoBehaviour {
 
 		// on passe au prochain cercle car il existe
 		if(currentCircle + 1 < Circles.Length){
+            // follow player starting from circle 3
+            if (currentCircle == 1)
+            {
+                cam.GetComponent<CameraBehaviour>().FollowPlayer = true;
+            }
+
 			tempete.startNextCercle ();
 			
 			Circles[currentCircle].ObjectNbr /= 4;
