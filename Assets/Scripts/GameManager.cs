@@ -56,11 +56,30 @@ public class GameManager : MonoBehaviour {
 
 
 		}
+        
+        // init circles color
+        for (int i = 0; i < Circles.Length; ++i)
+        {
+            if (i < currentCircle)
+            {
+                Color c = Color.HSVToRGB(((float)i + 1) / Circles.Length, 1, 1);
+                Debug.Log(c);
+                Circles[i].CircleColor = c;
+            }
+            else if (i == currentCircle)
+            {
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length + getVitesseJoueur() / player.Data.MaxSpeed / Circles.Length, 1, 1);
+                Debug.Log(c);
+                Circles[i].CircleColor = c;
+            } else
+            {
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length, 1, 1);
+                Debug.Log(c);
+                Circles[i].CircleColor = c;
+            }
+        }
 
-		//Color c = Color.HSVToRGB(getVitesseJoueur() / player.Data.MaxSpeed, 1, 1);
-		//Circles[currentCircle].CircleColor = c;
-
-		if((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
 			timer = Time.time+2;
 			//Debug.Log ("END");
 			skipLevel ();
