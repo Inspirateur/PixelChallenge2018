@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour {
 		compteurActuelNbVent=0;
 		compteurActuelVitesse = 0;
 		magnitudeVitessePrecedent = 0;
+		augmentationNbVent *= 2.0f;
 		diviseurAugmentationNbVent = player.AngularVelocityMax / augmentationNbVent;
 		diviseurAugmentationVitesse = player.AngularVelocityMax / augmentationVitesse;
 	}
