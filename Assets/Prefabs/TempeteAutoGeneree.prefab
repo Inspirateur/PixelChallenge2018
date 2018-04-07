@@ -173,4 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nombreCercle: 5
   incrementVentParCercle: 20
-  vitesseRotation: 75
+  vitesseRotation: 750

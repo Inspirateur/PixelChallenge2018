@@ -38,11 +38,12 @@ public class Tempete : MonoBehaviour {
 		frequenceEclairMin = frequenceEclairMinInitial;
 		frequenceEclairMax = frequenceEclairMaxInitial;
 		timerEclair = Time.time + frequenceEclairMin;
+		initNewCercle();
 	}
 
 	// Use this for initialization
 	void Start () {
-		initNewCercle();
+		
 	}
 	
 	// Update is called once per frame
