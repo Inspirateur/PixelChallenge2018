@@ -6,13 +6,12 @@ public class GameManager : MonoBehaviour {
 
 	public CharacterMovementController player;
 
+    public GameObject ExplosionPrefab;
+
     public CircleGenerator[] Circles;
     private int currentCircle = 0;
 
-	public float magnitudeAugmentationAChaqueNiveau;
-	private float magnitudeVitesseObjectif;
 	private float magnitudeVitessePrecedent;
-	private float ecartVitesseDebutAObjectif;
 
 	private Tempete tempete;
 
@@ -28,18 +27,19 @@ public class GameManager : MonoBehaviour {
 	private int compteurActuelNbVent;
 	private int compteurActuelVitesse;
 
+	private float timer;
+
 
 
 	// Use this for initialization
 	void Start () {
 		tempete = Tempete.getInstance ();
-		magnitudeVitesseObjectif = 0;
 		initVariable ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		// Debug.Log(player.AngularVelocity);
 
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			//Debug.Log ("up");
@@ -56,20 +56,50 @@ public class GameManager : MonoBehaviour {
 
 			magnitudeVitessePrecedent = getVitesseJoueur ();
 
-            Color c = Color.HSVToRGB(getVitesseJoueur() / magnitudeVitesseObjectif, 1, 1);
-            Circles[currentCircle].CircleColor = c;
-        }
 
-		if(this.magnitudeVitesseObjectif<=this.getVitesseJoueur()){
-			skipLevel ();
 		}
+
+        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+			timer = Time.time+2;
+			//Debug.Log ("END");
+			skipLevel ();
+
+		}    
+        
+        // set circles color
+        for (int i = 0; i < Circles.Length; ++i)
+        {
+            if (i < currentCircle)
+            {
+                Color c = Color.HSVToRGB(((float)i + 1) / Circles.Length, 1, 1);
+                Debug.Log(c);
+                Circles[i].CircleColor = c;
+            }
+            else if (i == currentCircle)
+            {
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length + getVitesseJoueur() / player.Data.MaxSpeed / Circles.Length, 1, 1);
+                Debug.Log(c);
+                Circles[i].CircleColor = c;
+            } else
+            {
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length, 1, 1);
+                Debug.Log(c);
+                Circles[i].CircleColor = c;
+            }
+        }
 
 	}
 
 	private void skipLevel(){
 		tempete.startNextCercle ();
+
 		initVariable ();
-        Circles[currentCircle].gameObject.SetActive(false);
+        
+        Circles[currentCircle].ObjectNbr /= 4;
+        Circles[currentCircle].Object = ExplosionPrefab;
+
+		modifierVitesseAngulaireMaxCouranteAcceleration();
+		initVariable();
         currentCircle++;
 	}
 
@@ -78,6 +108,8 @@ public class GameManager : MonoBehaviour {
 		return player.AngularVelocity;
 	}
 
+
+	//ajout du vent
 	private void spawnVent(int nb){
 		compteurActuelNbVent+=nb;
 		if(compteurActuelNbVent>augmentationNbVent){
@@ -89,6 +121,7 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	//ajout de la vitesse du vent
 	private void addVitesseVent(int nb){
 		compteurActuelVitesse+=nb;
 		if(compteurActuelNbVent>augmentationNbVent){
@@ -100,13 +133,31 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
+	//rénitialisation des variables
 	private void initVariable(){
 		compteurActuelNbVent=0;
 		compteurActuelVitesse = 0;
-		magnitudeVitessePrecedent = magnitudeVitesseObjectif;
-		this.magnitudeVitesseObjectif = magnitudeVitessePrecedent + magnitudeAugmentationAChaqueNiveau;
-		this.ecartVitesseDebutAObjectif = this.magnitudeVitesseObjectif - magnitudeVitessePrecedent;
-		diviseurAugmentationNbVent = ecartVitesseDebutAObjectif / augmentationNbVent;
-		diviseurAugmentationVitesse = ecartVitesseDebutAObjectif / augmentationVitesse;
+		magnitudeVitessePrecedent = 0;
+		diviseurAugmentationNbVent = player.AngularVelocityMax / augmentationNbVent;
+		diviseurAugmentationVitesse = player.AngularVelocityMax / augmentationVitesse;
+	}
+	private void modifierVitesseAngulaireMaxCouranteAcceleration(){
+		if(currentCircle + 1 < Circles.Length){
+			float rayonPrecedent = Circles[currentCircle].ObjectDistance;
+			float rayonSuivant = Circles[currentCircle+1].ObjectDistance;
+
+			float difRayon = rayonSuivant - rayonPrecedent;
+
+			float rapport = 1.0f + difRayon / rayonPrecedent;
+
+			player.AngularVelocityMax /= rapport;
+			player.AngularVelocityMax *= 1.3f;
+
+			player.AccelerationMax /= rapport;
+			
+			player.AngularVelocity *= 0.2f;
+
+			player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
+		}
 	}
 }
