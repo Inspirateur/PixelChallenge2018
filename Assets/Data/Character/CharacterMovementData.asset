@@ -14,7 +14,7 @@ MonoBehaviour:
   Acceleration: 0.2
   MaxSpeed: 1.7
   JumpImpulseAcceleration: 5
-  SlideMaxDuration: 1
+  SlideMaxDuration: 1.6
   AccelerationFactorOverSpeed:
     serializedVersion: 2
     m_Curve:
@@ -45,6 +45,3 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  HitSound: {fileID: 8300000, guid: ef5783af16244144082ea2938cd75918, type: 3}
-  JumpSound: {fileID: 8300000, guid: c770042a12617eb4aa6d6bbf39180c74, type: 3}
-  SlideSound: {fileID: 8300000, guid: 9b339eeb998db0149ade83aaa62723c8, type: 3}
