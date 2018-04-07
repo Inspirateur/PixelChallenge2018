@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,12 +12,12 @@ public class PauseMenuController : MonoBehaviour
     public GameObject Player;
 
     private Slider volumeSlider;
-    private Text volumeValueText;
+    private TextMeshProUGUI volumeValueText;
 
     void Start()
     {
         volumeSlider = PauseMenu.GetComponentInChildren<Slider>();
-        volumeValueText = volumeSlider.GetComponentInChildren<Text>();
+        volumeValueText = volumeSlider.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame

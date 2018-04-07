@@ -6,9 +6,24 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour
 {
 
+    public GameObject MainMenuContainer;
+    public GameObject CreditsMenuContainer;
+
     public void OnStartGamePressed()
     {
         SceneManager.LoadScene("MainGame");
+    }
+
+    public void OnCreditsPressed()
+    {
+        MainMenuContainer.SetActive(false);
+        CreditsMenuContainer.SetActive(true);
+    }
+
+    public void OnBackToMainMenuPressed()
+    {
+        CreditsMenuContainer.SetActive(false);
+        MainMenuContainer.SetActive(true);
     }
 
     public void OnExitPressed()
