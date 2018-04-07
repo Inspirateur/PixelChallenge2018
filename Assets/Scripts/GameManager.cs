@@ -30,9 +30,9 @@ public class GameManager : MonoBehaviour {
 	private int compteurActuelVitesse;
 
 	private float timer;
-	private bool gameover;
+	public bool gameover;
 
-	private Camera camera;
+	private Camera cam;
 
 
 
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour {
 		gameover = false;
 		tempete = Tempete.getInstance ();
 		initVariable ();
-		camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 
 	}
 	
@@ -200,7 +200,9 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void endGameVictory(){
+		Debug.Log("endGameVictory");
 		gameover = true;
+		cam.gameObject.transform.SetParent(null);
 		tempete.lancerGrosEclair();
 		Circles[currentCircle].ObjectNbr /= 4;
 		Circles[currentCircle].Object = ExplosionPrefab;
