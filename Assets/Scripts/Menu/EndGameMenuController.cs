@@ -35,9 +35,11 @@ public class EndGameMenuController : MonoBehaviour
     {
         WinMenuContainer.SetActive(true);
         CurrentTimeText.GetComponent<TextMeshProUGUI>().text = "Your time: " + ((int) timeSpent / 60).ToString()
-            + " minutes and " + (timeSpent % 60) + " seconds";
+            + " minutes, " + Mathf.Floor(timeSpent % 60).ToString() 
+            + " seconds, and " + Mathf.Floor((timeSpent - Mathf.Floor(timeSpent)) * 1000.0f).ToString() + " milliseconds";
         BestTimeText.GetComponent<TextMeshProUGUI>().text = "Best time: " + ((int) bestTime / 60).ToString()
-            + " minutes and " + (bestTime % 60) + " seconds";
+            + " minutes, " + Mathf.Floor(bestTime % 60).ToString()
+            + " seconds, and " + Mathf.Floor((bestTime - Mathf.Floor(bestTime)) * 1000.0f).ToString() + " milliseconds";
         DisplayMenu();
     }
 
@@ -49,7 +51,7 @@ public class EndGameMenuController : MonoBehaviour
 
     public void DisplayMenu()
     {
-		gameObject.transform.GetChild (0).gameObject.SetActive (true);
+		gameObject.transform.GetChild(0).gameObject.SetActive(true);
 		GetComponentInChildren<CanvasRenderer> ().SetAlpha(0.0f);
         displayTime = Time.time;
         isDisplayed = true;
