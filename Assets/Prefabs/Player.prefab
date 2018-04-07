@@ -705,7 +705,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 8ff633de0fff9c840b5956186da03bd5, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &70706430390686896
 CapsuleCollider2D:
