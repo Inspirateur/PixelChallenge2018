@@ -24,6 +24,7 @@ public class CharacterMovementController : MonoBehaviour
     private bool isJumping = false;
     private bool isSliding = false;
     private float firstTimeSlide;
+    private float timerNextJump;
 
     private void Awake()
     {
@@ -52,6 +53,7 @@ public class CharacterMovementController : MonoBehaviour
             animator.SetBool("IsJumping", true);
             
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
+            timerNextJump = Time.fixedTime + 0.2f;
         }
 
         if (Input.GetButton("Slide") && grounded > 0 && !isJumping && !isSliding)
@@ -97,7 +99,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
-            if (isJumping)
+            if (isJumping && Time.fixedTime >= timerNextJump)
             {
                 isJumping = false;
                 animator.SetBool("IsJumping", false);
