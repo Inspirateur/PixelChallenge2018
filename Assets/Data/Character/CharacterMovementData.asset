@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: CharacterMovementData
   m_EditorClassIdentifier: 
   Acceleration: 0.2
-  MaxSpeed: 1
+  MaxSpeed: 1.7
   JumpImpulseAcceleration: 5
   JumpButtonDuration: 0.5
   JumpVelocityLossCurve:
@@ -35,6 +35,37 @@ MonoBehaviour:
       value: 0.5
       inSlope: -0.013553536
       outSlope: -0.013553536
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  SlideMaxDuration: 1
+  AccelerationFactorOverSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1.829541
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.15
+      value: 1.3470795
+      inSlope: -2.5814388
+      outSlope: -2.5814388
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9
+      value: 0.32954103
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.32954103
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

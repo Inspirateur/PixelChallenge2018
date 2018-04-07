@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// Debug.Log(player.Data.MaxSpeed);
+		// Debug.Log(player.AngularVelocity);
 
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			//Debug.Log ("up");
@@ -91,13 +91,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void skipLevel(){
-		player.AngularVelocity = 0.2f;
 		tempete.startNextCercle ();
+
 		initVariable ();
-		modifierVitesseAngulaireMax();
         
         Circles[currentCircle].ObjectNbr /= 4;
         Circles[currentCircle].Object = ExplosionPrefab;
+
+		modifierVitesseAngulaireMaxCouranteAcceleration();
+		initVariable();
         currentCircle++;
 	}
 
@@ -136,21 +138,27 @@ public class GameManager : MonoBehaviour {
 		compteurActuelNbVent=0;
 		compteurActuelVitesse = 0;
 		magnitudeVitessePrecedent = 0;
-		diviseurAugmentationNbVent = this.player.Data.MaxSpeed / augmentationNbVent;
-		diviseurAugmentationVitesse = this.player.Data.MaxSpeed / augmentationVitesse;
+		diviseurAugmentationNbVent = player.AngularVelocityMax / augmentationNbVent;
+		diviseurAugmentationVitesse = player.AngularVelocityMax / augmentationVitesse;
 	}
 
-	private void modifierVitesseAngulaireMax(){
+	private void modifierVitesseAngulaireMaxCouranteAcceleration(){
 		if(currentCircle + 1 < Circles.Length){
 			float rayonPrecedent = Circles[currentCircle].ObjectDistance;
 			float rayonSuivant = Circles[currentCircle+1].ObjectDistance;
 
 			float difRayon = rayonSuivant - rayonPrecedent;
 
-			float rapport = difRayon / rayonPrecedent;
+			float rapport = 1.0f + difRayon / rayonPrecedent;
 
-			player.AngularVelocityMax = player.AngularVelocityMax / (1.0f+rapport);
-			player.AngularVelocityMax *= 1.1f;
+			player.AngularVelocityMax /= rapport;
+			player.AngularVelocityMax *= 1.3f;
+
+			player.AccelerationMax /= rapport;
+			
+			player.AngularVelocity *= 0.2f;
+
+			player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		}
 	}
 }

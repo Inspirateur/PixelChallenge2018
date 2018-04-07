@@ -18,4 +18,6 @@ public class CharacterMovementData : ScriptableObject
 
     // The slide duration
     public float SlideMaxDuration = 1f;
+
+    public AnimationCurve AccelerationFactorOverSpeed;
 }
