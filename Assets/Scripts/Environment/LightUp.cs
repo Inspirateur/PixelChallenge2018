@@ -8,6 +8,7 @@ public class LightUp : MonoBehaviour
     private SpriteRenderer sprite;
 
     private Color emissiveColor;
+    private bool on = false;
 
     private void Start()
     {
@@ -16,13 +17,29 @@ public class LightUp : MonoBehaviour
         SwitchOff();
     }
 
+    private void Update()
+    {
+        if (on)
+        {
+            SwitchOn();
+        }
+        else
+        {
+            SwitchOff();
+        }
+    }
+
     public void SwitchOn()
     {
-        sprite.material.SetColor("_EmissionColor", emissiveColor);
+        on = true;
+        emissiveColor = sprite.material.GetColor("_Color");
+        sprite.material.SetColor("_EmissionColor", 0.7f * emissiveColor);
     }
 
     public void SwitchOff()
     {
-        sprite.material.SetColor("_EmissionColor", new Color(0, 0, 0, 0));
+        on = false;
+        emissiveColor = sprite.material.GetColor("_Color");
+        sprite.material.SetColor("_EmissionColor", 0.2f * emissiveColor);
     }
 }
