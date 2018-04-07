@@ -95,7 +95,7 @@ public class CharacterMovementController : MonoBehaviour
                 rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
                 timerNextJump = Time.fixedTime + 0.2f;
             }
-            else if(grounded > 0 && !isJumping && isSliding){
+            else if(grounded > 0 && !isJumping && isSliding && comboEnable){
                 comboEnable = false;
                 isSliding = false;
                 StandUpCollider.enabled = true;
@@ -131,12 +131,12 @@ public class CharacterMovementController : MonoBehaviour
                 StandUpCollider.enabled = false;
                 animator.SetBool("IsSliding", true);
             }
-            else if(isJumping && !isSliding)
+            else if(isJumping && !isSliding && comboEnable)
             {
                 comboEnable = false;
                 AudioSource.PlayClipAtPoint(Data.SlideSound, transform.position);
 
-                rb.velocity *= 0.8f;
+                rb.velocity = Vector2.zero;
 
                 velocityAvantSlide = AngularVelocity;
                 AngularVelocity = Mathf.Max((AngularVelocityMax * 0.9f), AngularVelocity);
