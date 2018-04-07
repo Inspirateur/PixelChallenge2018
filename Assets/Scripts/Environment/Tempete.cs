@@ -186,7 +186,7 @@ public class Tempete : MonoBehaviour {
 		}
     }
 
-	private void lancerGrosEclair(){
+	public void lancerGrosEclair(){
 
 		audioSource.pitch = 1.0f;
 		audioSource.PlayOneShot(sonGrosEclair, 1.0f);

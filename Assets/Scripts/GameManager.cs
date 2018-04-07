@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour {
 	private int compteurActuelVitesse;
 
 	private float timer;
+	private bool gameover;
 
 
 
 	// Use this for initialization
 	void Start () {
+		gameover = false;
 		tempete = Tempete.getInstance ();
 		initVariable ();
 	}
@@ -41,6 +43,15 @@ public class GameManager : MonoBehaviour {
 	void Update () {
 		// Debug.Log(player.AngularVelocity);
 
+		if(!gameover){
+			UpdateGame();
+		} else {
+			UpdateEndGame();
+		}
+
+	}
+
+	private void UpdateGame(){
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			//Debug.Log ("up");
 			float variation = getVitesseJoueur () - magnitudeVitessePrecedent;
@@ -59,7 +70,7 @@ public class GameManager : MonoBehaviour {
 
 		}
 
-        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+        if ((player.AngularVelocityMax * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
 			timer = Time.time+2;
 			//Debug.Log ("END");
 			skipLevel ();
@@ -84,21 +95,29 @@ public class GameManager : MonoBehaviour {
                 Circles[i].CircleColor = c;
             }
         }
+	}
 
+	private void UpdateEndGame(){
+		
 	}
 
 	private void skipLevel(){
-		tempete.startNextCercle ();
 
-		initVariable ();
-        
-        Circles[currentCircle].ObjectNbr /= 4;
-        Circles[currentCircle].Object = ExplosionPrefab;
-        Circles[currentCircle].CleanWalls();
+		// on passe au prochain cercle car il existe
+		if(currentCircle + 1 < Circles.Length){
+			tempete.startNextCercle ();
+			
+			Circles[currentCircle].ObjectNbr /= 4;
+			Circles[currentCircle].Object = ExplosionPrefab;
+			Circles[currentCircle].CleanWalls();
 
-        modifierVitesseAngulaireMaxCouranteAcceleration();
-		initVariable();
-        currentCircle++;
+			modifierVitesseAngulaireMaxCouranteAcceleration();
+			initVariable();
+			currentCircle++;
+		}
+		else {
+			endGameVictory();
+		}
 	}
 
 
@@ -158,5 +177,14 @@ public class GameManager : MonoBehaviour {
 
 			player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		}
+	}
+
+	private void endGameVictory(){
+		gameover = true;
+		tempete.lancerGrosEclair();
+		Circles[currentCircle].ObjectNbr /= 4;
+		Circles[currentCircle].Object = ExplosionPrefab;
+		Circles[currentCircle].CleanWalls();
+		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 	}
 }
