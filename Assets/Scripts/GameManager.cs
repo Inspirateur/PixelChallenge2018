@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
 
 	private Camera cam;
 
+	private float bestTime;
 	public float time;
 	private GameController gameController;
 
@@ -231,6 +232,7 @@ public class GameManager : MonoBehaviour {
 		Circles[currentCircle].CleanWalls();
 		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		player.AngularVelocityMax = 0.0f;
+		setScore ();
 	}
 
 	private void endGameLose(){
@@ -249,7 +251,8 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void setScore(){
-		gameController.submitPlayerScoring ((int)time); 
+		gameController.submitPlayerScoring (time); 
+		bestTime = gameController.playerScoring.highScore;
 	}
    
 
