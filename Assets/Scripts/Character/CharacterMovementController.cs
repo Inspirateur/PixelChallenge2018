@@ -72,12 +72,16 @@ public class CharacterMovementController : MonoBehaviour
             Debug.Log("ca touche");
             AngularVelocity -= 4 / transform.position.magnitude / 2.5f;
         }
+
+        AudioSource.PlayClipAtPoint(Data.HitSound, transform.position);
     }
 
     private void FixedUpdateGame(){
         
         if (Input.GetButton("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
+            AudioSource.PlayClipAtPoint(Data.JumpSound, transform.position);
+
             isJumping = true;
             animator.SetBool("IsJumping", true);
             
@@ -89,6 +93,8 @@ public class CharacterMovementController : MonoBehaviour
 
             if(grounded > 0 && !isJumping && !isSliding)
             {
+                AudioSource.PlayClipAtPoint(Data.SlideSound, transform.position);
+
                 firstTimeSlide = Time.time;
                 isSliding = true;
                 SlidingCollider.enabled = true;

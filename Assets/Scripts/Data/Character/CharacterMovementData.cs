@@ -15,4 +15,8 @@ public class CharacterMovementData : ScriptableObject
     public float SlideMaxDuration = 1f;
 
     public AnimationCurve AccelerationFactorOverSpeed;
+
+    public AudioClip HitSound;
+    public AudioClip JumpSound;
+    public AudioClip SlideSound;
 }

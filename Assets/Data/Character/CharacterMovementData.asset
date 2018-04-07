@@ -14,31 +14,6 @@ MonoBehaviour:
   Acceleration: 0.2
   MaxSpeed: 1.7
   JumpImpulseAcceleration: 5
-  JumpButtonDuration: 0.5
-  JumpVelocityLossCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 1
-      inSlope: -13.250709
-      outSlope: Infinity
-      tangentMode: 97
-    - serializedVersion: 2
-      time: 0.3
-      value: 1
-      inSlope: Infinity
-      outSlope: -1.451613
-      tangentMode: 7
-    - serializedVersion: 2
-      time: 1
-      value: 0.5
-      inSlope: -0.013553536
-      outSlope: -0.013553536
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
   SlideMaxDuration: 1
   AccelerationFactorOverSpeed:
     serializedVersion: 2
@@ -70,3 +45,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  HitSound: {fileID: 8300000, guid: ef5783af16244144082ea2938cd75918, type: 3}
+  JumpSound: {fileID: 8300000, guid: c770042a12617eb4aa6d6bbf39180c74, type: 3}
+  SlideSound: {fileID: 8300000, guid: 9b339eeb998db0149ade83aaa62723c8, type: 3}
