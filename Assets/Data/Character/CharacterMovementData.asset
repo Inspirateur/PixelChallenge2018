@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Acceleration: 0.2
   MaxSpeed: 1.7
-  JumpImpulseAcceleration: 5
+  JumpImpulseAcceleration: 5.2
   SlideMaxDuration: 0.5
   AccelerationFactorOverSpeed:
     serializedVersion: 2

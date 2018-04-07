@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour {
 
 		}
 
-		if(!enoughtSpeedToDie && this.player.AngularVelocity > this.player.AngularVelocityMax * 0.35f){
+		if(!enoughtSpeedToDie && this.currentCircle != 0 && this.player.AngularVelocity > this.player.AngularVelocityMax * 0.35f){
 			enoughtSpeedToDie = true;
 		}
 
