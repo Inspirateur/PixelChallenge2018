@@ -43,4 +43,11 @@ public class CircleGenerator : Neon {
 			currObject = Object;
 		}
 	}
+
+    public void cleanWalls()
+    {
+        Destroy(GetComponentInChildren<WallGenerator>().gameObject);
+    }
+
+
 }
