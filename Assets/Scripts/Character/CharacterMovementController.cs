@@ -7,6 +7,7 @@ public class CharacterMovementController : MonoBehaviour
 
     public CharacterMovementData Data;
     public float AngularVelocity = 0f;
+    public float AngularVelocityMax;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -19,6 +20,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        AngularVelocityMax = Data.MaxSpeed;
     }
 	
 	void FixedUpdate ()
@@ -44,7 +46,7 @@ public class CharacterMovementController : MonoBehaviour
 
         animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
 
-        AngularVelocity = Mathf.Min(Data.MaxSpeed, AngularVelocity + Data.Acceleration * Time.deltaTime);
+        AngularVelocity = Mathf.Min(AngularVelocityMax, AngularVelocity + Data.Acceleration * Time.deltaTime);
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
     }
 

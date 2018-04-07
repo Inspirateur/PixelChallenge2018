@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		// Debug.Log(player.Data.MaxSpeed);
 
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			//Debug.Log ("up");
@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour {
 	private void skipLevel(){
 		tempete.startNextCercle ();
 		initVariable ();
+		modifierVitesseAngulaireMax();
         Circles[currentCircle].gameObject.SetActive(false);
         currentCircle++;
 	}
@@ -110,5 +111,17 @@ public class GameManager : MonoBehaviour {
 		diviseurAugmentationVitesse = ecartVitesseDebutAObjectif / augmentationVitesse;
 	}
 
+	private void modifierVitesseAngulaireMax(){
+		if(currentCircle + 1 < Circles.Length){
+			float rayonPrecedent = Circles[currentCircle].ObjectDistance;
+			float rayonSuivant = Circles[currentCircle+1].ObjectDistance;
 
+			float difRayon = rayonSuivant - rayonPrecedent;
+
+			float rapport = difRayon / rayonPrecedent;
+
+			player.AngularVelocityMax = player.AngularVelocityMax / (1.0f+rapport);
+			player.AngularVelocityMax *= 1.1f;
+		}
+	}
 }
