@@ -82,7 +82,6 @@ public class CharacterMovementController : MonoBehaviour
                 AngularVelocity + AccelerationMax * Data.AccelerationFactorOverSpeed.Evaluate(AngularVelocity / AngularVelocityMax) * Time.deltaTime);
         }
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
-        Debug.Log(AngularVelocity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

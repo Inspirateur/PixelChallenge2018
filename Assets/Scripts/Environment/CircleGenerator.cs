@@ -36,7 +36,7 @@ public class CircleGenerator : Neon {
 					+ Quaternion.AngleAxis(i * 360.0f / ObjectNbr, Vector3.forward) * new Vector3(ObjectDistance, 0, 0);
 				Quaternion rot = Quaternion.LookRotation(Vector3.forward, pos - transform.position);
 				GameObject obj = Instantiate(Object, pos, rot, transform);
-			}
+            }
 
 			objectNbr = ObjectNbr;
 			objectDistance = ObjectDistance;
@@ -44,9 +44,13 @@ public class CircleGenerator : Neon {
 		}
 	}
 
-    public void cleanWalls()
+    public void CleanWalls()
     {
-        Destroy(GetComponentInChildren<WallGenerator>().gameObject);
+        foreach (WallGenerator child in GetComponentsInChildren<WallGenerator>())
+        {
+            Debug.Log("WALLAH SI TU PASSE ICI T'ES MORT");
+            Destroy(child.gameObject);
+        }
     }
 
 

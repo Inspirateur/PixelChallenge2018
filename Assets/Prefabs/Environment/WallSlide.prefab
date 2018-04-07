@@ -343,6 +343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4795432420294734}
   - component: {fileID: 114326592670585538}
+  - component: {fileID: 114175757655951572}
   m_Layer: 0
   m_Name: WallSlide
   m_TagString: Untagged
@@ -4407,6 +4408,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f51758950ade943855101e9b125544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114175757655951572
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1251268977628914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd65a11a981ccf943b5f9abc475d5086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114183133732564208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4485,9 +4497,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Object: {fileID: 1205998286239638, guid: 3731ce59aca7a7246b46d3c6cdd75dc5, type: 2}
-  length: 27.03
-  height: 3.77
+  length: 27
+  height: 3
   circle_nb: 2
+  angle: 60
 --- !u!114 &114361199680293904
 MonoBehaviour:
   m_ObjectHideFlags: 1
