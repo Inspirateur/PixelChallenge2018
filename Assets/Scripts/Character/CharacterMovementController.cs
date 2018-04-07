@@ -27,13 +27,16 @@ public class CharacterMovementController : MonoBehaviour
     private int grounded = 0;
     private bool isJumping = false;
     private bool isSliding = false;
-    private float firstTimeSlide;
+    private float timerFinSlide;
     private float timeEndInv;
     private LightFlickerData normal_flicker_save;
     private float timerNextJump;
+    private float velocityAvantSlide;
+    private bool comboEnable;
 
     private void Awake()
     {
+        comboEnable = true;
         normal_flicker_save = bodyParts[0].Data;
         timeEndInv = 0;
         rb = GetComponent<Rigidbody2D>();
@@ -63,17 +66,20 @@ public class CharacterMovementController : MonoBehaviour
     public void HitWall()
     {
         if (timeEndInv < Time.time) {
-            timeEndInv = Time.time + secondesIntouchable;
-            foreach (LightFlicker bodypart in bodyParts)
-            {
-                bodypart.Data = flickering;
-                bodypart.forceOff();
-            }
-            Debug.Log("ca touche");
-            AngularVelocity -= 3 / transform.position.magnitude/* / 2.5f*/;
+            invulnerable();
+            AngularVelocity -= 2 / transform.position.magnitude;
         }
 
         AudioSource.PlayClipAtPoint(Data.HitSound, transform.position);
+    }
+
+    public void invulnerable(){
+        timeEndInv = Time.time + secondesIntouchable;
+        foreach (LightFlicker bodypart in bodyParts)
+        {
+            bodypart.Data = flickering;
+            bodypart.forceOff();
+        }
     }
 
     private void FixedUpdateGame(){
@@ -90,6 +96,7 @@ public class CharacterMovementController : MonoBehaviour
                 timerNextJump = Time.fixedTime + 0.2f;
             }
             else if(grounded > 0 && !isJumping && isSliding){
+                comboEnable = false;
                 isSliding = false;
                 StandUpCollider.enabled = true;
                 SlidingCollider.enabled = false;
@@ -113,7 +120,12 @@ public class CharacterMovementController : MonoBehaviour
             {
                 AudioSource.PlayClipAtPoint(Data.SlideSound, transform.position);
 
-                firstTimeSlide = Time.time;
+                rb.velocity *= 0.8f;
+
+                velocityAvantSlide = AngularVelocity;
+                AngularVelocity = Mathf.Max((AngularVelocityMax * 0.9f), AngularVelocity);
+
+                timerFinSlide = Time.time + Data.SlideMaxDuration;
                 isSliding = true;
                 SlidingCollider.enabled = true;
                 StandUpCollider.enabled = false;
@@ -121,9 +133,15 @@ public class CharacterMovementController : MonoBehaviour
             }
             else if(isJumping && !isSliding)
             {
-                Debug.Log("slide in the air");
-                rb.velocity *= 0.2f;
-                firstTimeSlide = Time.time;
+                comboEnable = false;
+                AudioSource.PlayClipAtPoint(Data.SlideSound, transform.position);
+
+                rb.velocity *= 0.8f;
+
+                velocityAvantSlide = AngularVelocity;
+                AngularVelocity = Mathf.Max((AngularVelocityMax * 0.9f), AngularVelocity);
+
+                timerFinSlide = Time.time + Data.SlideMaxDuration;
                 isSliding = true;
                 isJumping = false;
                 SlidingCollider.enabled = true;
@@ -138,7 +156,7 @@ public class CharacterMovementController : MonoBehaviour
         if(isSliding){
             Vector3 exteriorVector = (transform.position - new Vector3(GravityData.Center.x, GravityData.Center.y)).normalized;
 
-            Vector2 forceToApply = exteriorVector * GravityData.Force * 0.8f * rb.mass;
+            Vector2 forceToApply = exteriorVector * GravityData.Force * 0.9f * rb.mass;
             if (!GravityData.IsAttraction || gm.gameover)
             {
                 forceToApply *= -1f;
@@ -147,12 +165,13 @@ public class CharacterMovementController : MonoBehaviour
             rb.AddForce(forceToApply);
         }
 
-        if (isSliding && Time.time - firstTimeSlide > Data.SlideMaxDuration)
+        if (isSliding && Time.time >= timerFinSlide)
         {
             isSliding = false;
             StandUpCollider.enabled = true;
             SlidingCollider.enabled = false;
             animator.SetBool("IsSliding", false);
+            AngularVelocity = velocityAvantSlide;
         }
 
         animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
@@ -184,6 +203,7 @@ public class CharacterMovementController : MonoBehaviour
             if (isJumping && Time.fixedTime >= timerNextJump)
             {
                 isJumping = false;
+                comboEnable = true;
                 animator.SetBool("IsJumping", false);
             }
 
