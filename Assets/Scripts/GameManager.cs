@@ -40,11 +40,13 @@ public class GameManager : MonoBehaviour {
 	private float bestTime;
 	public float time;
 	private GameController gameController;
+	private bool enoughtSpeedToDie;
 
 
 
 	// Use this for initialization
 	void Start () {
+		enoughtSpeedToDie = false;
 		gameover = false;
 		victory = false;
 		tempete = Tempete.getInstance ();
@@ -120,7 +122,15 @@ public class GameManager : MonoBehaviour {
 
 		}
 
-		if(Input.GetKeyUp(KeyCode.K)){
+		if(!enoughtSpeedToDie && this.player.AngularVelocity > this.player.AngularVelocityMax * 0.35f){
+			enoughtSpeedToDie = true;
+		}
+
+		if(enoughtSpeedToDie && this.player.AngularVelocity < this.player.AngularVelocityMax * 0.30f){
+			endGameLose();
+		}
+
+		if(enoughtSpeedToDie && Input.GetKeyUp(KeyCode.K)){
 			endGameLose();
 		}
 	}
@@ -148,7 +158,7 @@ public class GameManager : MonoBehaviour {
 			Circles[currentCircle].ObjectNbr /= 4;
 			Circles[currentCircle].Object = ExplosionPrefab;
 			Circles[currentCircle].CleanWalls();
-
+			enoughtSpeedToDie = false;
 			modifierVitesseAngulaireMaxCouranteAcceleration();
 			initVariable();
 			currentCircle++;
