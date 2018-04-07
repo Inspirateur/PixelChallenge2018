@@ -30,7 +30,9 @@ public class GameManager : MonoBehaviour {
 	private int compteurActuelVitesse;
 
 	private float timer;
+	[HideInInspector]
 	public bool gameover;
+	[HideInInspector]
 	public bool victory;
 
 	private Camera cam;
