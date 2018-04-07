@@ -45,3 +45,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+  HitSound: {fileID: 8300000, guid: ef5783af16244144082ea2938cd75918, type: 3}
+  JumpSound: {fileID: 8300000, guid: c770042a12617eb4aa6d6bbf39180c74, type: 3}
+  SlideSound: {fileID: 8300000, guid: 1acf4a21cc12e874b98285cfb3733ea8, type: 3}
