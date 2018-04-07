@@ -20,14 +20,13 @@ public class EndGameMenuController : MonoBehaviour
 
     void Start ()
     {
-		
-	}
+    }
 	
 	void Update ()
     {
         if (isDisplayed && Time.time < displayTime + FadeInDuration)
         {
-            GetComponentInChildren<CanvasRenderer>().SetAlpha((Time.time - displayTime) / FadeInDuration);
+            GetComponentInChildren<CanvasGroup>().alpha = (Time.time - displayTime) / FadeInDuration;
         }
 	}
 
@@ -52,7 +51,7 @@ public class EndGameMenuController : MonoBehaviour
     public void DisplayMenu()
     {
 		gameObject.transform.GetChild(0).gameObject.SetActive(true);
-		GetComponentInChildren<CanvasRenderer> ().SetAlpha(0.0f);
+        GetComponentInChildren<CanvasGroup>().alpha = 0f;
         displayTime = Time.time;
         isDisplayed = true;
     }
