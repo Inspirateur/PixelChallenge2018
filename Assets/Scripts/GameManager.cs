@@ -64,7 +64,10 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         // Debug.Log(player.AngularVelocity);
 
-        timerText.GetComponent<TextMeshPro>().text = ((int) time / 60).ToString("00") + ":" + Mathf.Floor(time % 60).ToString("00"); 
+        if (!gameover)
+        {
+            timerText.GetComponent<TextMeshPro>().text = ((int) time / 60).ToString("00") + ":" + Mathf.Floor(time % 60).ToString("00"); 
+        }
 
 		if(!gameover){
 			time += Time.deltaTime;
