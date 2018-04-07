@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class CircleGenerator : MonoBehaviour {
+public class CircleGenerator : Neon {
 
     public GameObject Object;
     public int ObjectNbr = 10;
@@ -11,22 +11,6 @@ public class CircleGenerator : MonoBehaviour {
 
     private int objectNbr = -1;
     private float objectDistance = -1;
-
-    public Color CircleColor
-    {
-        set
-        {
-            foreach (Transform t in transform)
-            {
-                SpriteRenderer rend = t.GetComponent<SpriteRenderer>();
-                if (rend != null)
-                {
-                    rend.material.SetColor("_Color", value);
-                }
-            }
-
-        }
-    }
 
 	// Update is called once per frame
 	void Update () {
@@ -39,7 +23,10 @@ public class CircleGenerator : MonoBehaviour {
             }
             foreach (Transform child in children)
             {
-                DestroyImmediate(child.gameObject);
+                if (child.tag == "Ground")
+                {
+                    DestroyImmediate(child.gameObject);
+                }
             }
 
             for (int i = 0; i < ObjectNbr; i++)

@@ -109,6 +109,4 @@ public class GameManager : MonoBehaviour {
 		diviseurAugmentationNbVent = ecartVitesseDebutAObjectif / augmentationNbVent;
 		diviseurAugmentationVitesse = ecartVitesseDebutAObjectif / augmentationVitesse;
 	}
-
-
 }
