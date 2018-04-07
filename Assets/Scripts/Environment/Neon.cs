@@ -20,6 +20,7 @@ public class Neon : MonoBehaviour {
                     if (sys != null)
                     {
                         sys.GetComponent<Renderer>().material.SetColor("_Color", value);
+                        sys.GetComponent<Renderer>().material.SetColor("_EmissionColor", 0.4f * value);
                     } else { 
                         Debug.Log(t.tag);
                         t.gameObject.GetComponent<Neon>().CircleColor = value;
