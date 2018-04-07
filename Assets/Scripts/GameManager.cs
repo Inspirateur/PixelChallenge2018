@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+
+
 	public CharacterMovementController player;
 
     public GameObject ExplosionPrefab;
@@ -29,17 +31,24 @@ public class GameManager : MonoBehaviour {
 
 	private float timer;
 
+	private Camera camera;
+
+
+
 
 
 	// Use this for initialization
 	void Start () {
 		tempete = Tempete.getInstance ();
 		initVariable ();
+		camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Debug.Log(player.AngularVelocity);
+
 
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			//Debug.Log ("up");
@@ -59,7 +68,7 @@ public class GameManager : MonoBehaviour {
 
 		}
 
-        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+        if ((this.player.AngularVelocityMax * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
 			timer = Time.time+2;
 			//Debug.Log ("END");
 			skipLevel ();
@@ -104,7 +113,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-	private float getVitesseJoueur(){
+	public float getVitesseJoueur(){
 		return player.AngularVelocity;
 	}
 
@@ -160,5 +169,17 @@ public class GameManager : MonoBehaviour {
 
 			player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		}
+	}
+
+	public CircleGenerator getCircleCourant(){
+		return Circles [currentCircle];
+	}
+
+	public Vector3 getPosPlayer(){
+		return player.gameObject.transform.position;
+	}
+
+	public float getPercent(){
+		return getVitesseJoueur () / player.AngularVelocityMax;
 	}
 }
