@@ -9,12 +9,7 @@ public class CharacterMovementData : ScriptableObject
     public float MaxSpeed = 2f;
 
     // The instantaneous jump acceleration
-    public float JumpImpulseAcceleration = 10;
-
-    // The jump button duration
-    public float JumpButtonDuration = 0.5f;
-
-    public AnimationCurve JumpVelocityLossCurve;
+    public float JumpImpulseAcceleration = 5;
 
     // The slide duration
     public float SlideMaxDuration = 1f;

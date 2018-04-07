@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1020dbce519506940acb09d7b005a259, type: 3}
   m_Name: CustomGravityData
   m_EditorClassIdentifier: 
-  Force: 10
+  Force: 15
   Center: {x: 0, y: 0}
   IsAttraction: 0
   IsRotatedTowardsCenter: 1

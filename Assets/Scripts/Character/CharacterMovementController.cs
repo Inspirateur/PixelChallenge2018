@@ -22,9 +22,7 @@ public class CharacterMovementController : MonoBehaviour
     private int grounded = 0;
     private bool isJumping = false;
     private bool isSliding = false;
-    private float firstJumpTime;
-    private float firstSlideTime;
-    private float preJumpVelocity;
+    private float firstTimeSlide;
 
     private void Awake()
     {
@@ -40,26 +38,22 @@ public class CharacterMovementController : MonoBehaviour
         
         if (Input.GetButton("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
-            // first jump frame from the ground
-            firstJumpTime = Time.time;
             isJumping = true;
-            AngularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
             animator.SetBool("IsJumping", true);
-
-            // basic impulse force
+            
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
         }
 
         if (Input.GetButton("Slide") && grounded > 0 && !isJumping && !isSliding)
         {
-            firstSlideTime = Time.time;
+            firstTimeSlide = Time.time;
             isSliding = true;
             SlidingCollider.enabled = true;
             StandUpCollider.enabled = false;
             animator.SetBool("IsSliding", true);
         }
 
-        if (isSliding && !Input.GetButton("Slide"))
+        if (isSliding && Time.time - firstTimeSlide > Data.SlideMaxDuration)
         {
             isSliding = false;
             StandUpCollider.enabled = true;
@@ -76,12 +70,6 @@ public class CharacterMovementController : MonoBehaviour
                 Mathf.Min(AngularVelocityMax,
                 AngularVelocity + AccelerationMax * Data.AccelerationFactorOverSpeed.Evaluate(AngularVelocity / AngularVelocityMax) * Time.deltaTime);
         }
-        else if (isSliding)
-        {
-            AngularVelocity =
-                Mathf.Max(0f,
-                AngularVelocity - AccelerationMax * Data.AccelerationFactorOverSpeed.Evaluate(AngularVelocity / AngularVelocityMax) * Time.deltaTime);
-        }
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
     }
 
@@ -93,7 +81,6 @@ public class CharacterMovementController : MonoBehaviour
             {
                 isJumping = false;
                 animator.SetBool("IsJumping", false);
-                AngularVelocity = preJumpVelocity;
             }
 
             grounded++;
@@ -112,7 +99,6 @@ public class CharacterMovementController : MonoBehaviour
         if (collision.collider.tag == "Ground")
         {
             grounded--;
-            preJumpVelocity = AngularVelocity;
         }
 
         LightUp lightUp = collision.collider.GetComponent<LightUp>();

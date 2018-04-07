@@ -609,7 +609,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.000000025377371, y: 0.21288083}
+  m_Offset: {x: 0.000000025377371, y: -3.47}
   m_Size: {x: 10.000002, y: 3.0742433}
   m_Direction: 1
 --- !u!70 &70901756211010312
@@ -657,6 +657,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 89f31cfcb2ab1934687ec60a653bfe73, type: 2}
   AngularVelocity: 0
+  AngularVelocityMax: 0
+  AccelerationMax: 0
   StandUpCollider: {fileID: 70901756211010312}
   SlidingCollider: {fileID: 70706430390686896}
 --- !u!114 &114984061171742152
