@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour {
             }
             else if (i == currentCircle)
             {
-                Color c = Color.HSVToRGB(((float)i) / Circles.Length + getVitesseJoueur() / player.Data.MaxSpeed / Circles.Length, 1, 1);
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length + getPercent() / Circles.Length, 1, 1);
                 Circles[i].CircleColor = c;
             } else
             {

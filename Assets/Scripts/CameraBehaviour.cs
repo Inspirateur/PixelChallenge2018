@@ -10,7 +10,8 @@ public class CameraBehaviour : MonoBehaviour {
 	private Vector3 velocityEnd = Vector3.zero ;
 	private float distanceFocusDesiree;
 	private float initial;
-	// private Vector3 posInitial;
+    private Vector3 posInitial;
+    private Quaternion initRot;
 
     public bool FollowPlayer = false;
 
@@ -18,7 +19,10 @@ public class CameraBehaviour : MonoBehaviour {
 	void Start () {
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 		initial = this.transform.position.z;
-		// posInitial = this.transform.position;
+		posInitial = this.transform.position;
+        posInitial.x = 0;
+        posInitial.y = 0;
+        initRot = transform.rotation;
 	}
 
 	// Update is called once per frame
@@ -28,7 +32,7 @@ public class CameraBehaviour : MonoBehaviour {
 
 	void LateUpdate(){
 		
-		if(!gm.gameover && FollowPlayer){
+		if(!gm.gameover){
 			UpdateGame();
 		} else {
 			UpdateEndGame();
@@ -36,17 +40,25 @@ public class CameraBehaviour : MonoBehaviour {
 	}
 
 	private void UpdateGame(){
-		transform.up = Vector3.up;
-		distanceFocusDesiree = (gm.getCircleCourant ().ObjectDistance * 0.5f) + gm.getPosPlayer().z;
-	
-		Vector3 pos = this.transform.position;
+        if (FollowPlayer)
+        {
+            transform.up = Vector3.up;
+            distanceFocusDesiree = (gm.getCircleCourant().ObjectDistance * 0.5f) + gm.getPosPlayer().z;
 
-		pos.z = Mathf.SmoothDamp (this.transform.position.z, gm.getPercent () * (-distanceFocusDesiree) + initial, ref velocity, 0.3f);
+            Vector3 pos = this.transform.position;
 
-		this.transform.position = pos;
-        Vector3 rot = this.transform.eulerAngles;
-        rot.z = 0;
-        this.transform.rotation = Quaternion.Euler(rot);
+            pos.z = Mathf.SmoothDamp(this.transform.position.z, gm.getPercent() * (-distanceFocusDesiree) + initial, ref velocity, 0.3f);
+
+            this.transform.position = pos;
+            Vector3 rot = this.transform.eulerAngles;
+            rot.z = 0;
+            this.transform.rotation = Quaternion.Euler(rot);
+        }
+        else
+        {
+            transform.position = posInitial;
+            transform.rotation = initRot;
+        }
 	}
 
 	private void UpdateEndGame(){
