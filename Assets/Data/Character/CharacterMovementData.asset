@@ -14,7 +14,7 @@ MonoBehaviour:
   Acceleration: 0.2
   MaxSpeed: 1.7
   JumpImpulseAcceleration: 5
-  SlideMaxDuration: 1.6
+  SlideMaxDuration: 0.5
   AccelerationFactorOverSpeed:
     serializedVersion: 2
     m_Curve:
