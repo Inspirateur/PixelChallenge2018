@@ -126,11 +126,11 @@ public class GameManager : MonoBehaviour {
 			enoughtSpeedToDie = true;
 		}
 
-		if(enoughtSpeedToDie && this.player.AngularVelocity < this.player.AngularVelocityMax * 0.30f){
+		if(enoughtSpeedToDie && this.player.AngularVelocity < this.player.AngularVelocityMax * 0.20f){
 			endGameLose();
 		}
 
-		if(enoughtSpeedToDie && Input.GetKeyUp(KeyCode.K)){
+		if(Input.GetKeyUp(KeyCode.K)){
 			endGameLose();
 		}
 	}
@@ -159,6 +159,7 @@ public class GameManager : MonoBehaviour {
 			Circles[currentCircle].Object = ExplosionPrefab;
 			Circles[currentCircle].CleanWalls();
 			enoughtSpeedToDie = false;
+			player.invulnerable();
 			modifierVitesseAngulaireMaxCouranteAcceleration();
 			initVariable();
 			currentCircle++;

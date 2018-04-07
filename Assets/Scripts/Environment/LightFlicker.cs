@@ -15,7 +15,7 @@ public class LightFlicker : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         emissiveColor = sprite.material.GetColor("_EmissionColor");
-        SwitchOn();
+        SwitchOff();
     }
 
     public void forceOff()
