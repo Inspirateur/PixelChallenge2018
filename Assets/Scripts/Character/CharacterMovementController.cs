@@ -68,6 +68,7 @@ public class CharacterMovementController : MonoBehaviour
         }
 
         animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
+        animator.SetFloat("RunningSpeed", AngularVelocity * transform.position.magnitude / 2.5f);
 
         if (!(isSliding || isJumping))
         {
