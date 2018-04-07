@@ -70,20 +70,36 @@ public class CharacterMovementController : MonoBehaviour
                 bodypart.forceOff();
             }
             Debug.Log("ca touche");
-            AngularVelocity -= 4 / transform.position.magnitude / 2.5f;
+            AngularVelocity -= 3 / transform.position.magnitude/* / 2.5f*/;
         }
     }
 
     private void FixedUpdateGame(){
         
-        if (Input.GetButton("Jump") && grounded > 0 && !isJumping && !isSliding)
-        {
-            isJumping = true;
-            animator.SetBool("IsJumping", true);
-            
-            rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
-            timerNextJump = Time.fixedTime + 0.2f;
+        if (Input.GetButton("Jump")){
+            if(grounded > 0 && !isJumping && !isSliding)
+            {
+                isJumping = true;
+                animator.SetBool("IsJumping", true);
+                
+                rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
+                timerNextJump = Time.fixedTime + 0.2f;
+            }
+            else if(grounded > 0 && !isJumping && isSliding){
+                isSliding = false;
+                StandUpCollider.enabled = true;
+                SlidingCollider.enabled = false;
+                animator.SetBool("IsSliding", false);
+                
+                isJumping = true;
+                animator.SetBool("IsJumping", true);
+                
+                rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
+                timerNextJump = Time.fixedTime + 0.2f;
+                animator.Play("decolage");
+            }
         }
+        
 
         if (Input.GetButton("Slide")){
 
@@ -134,7 +150,7 @@ public class CharacterMovementController : MonoBehaviour
         animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
         animator.SetFloat("RunningSpeed", AngularVelocity * transform.position.magnitude / 2.5f);
 
-        if (!(/*isSliding || */isJumping))
+        if (!(isSliding || isJumping))
         {
             AngularVelocity =
                 Mathf.Min(AngularVelocityMax,

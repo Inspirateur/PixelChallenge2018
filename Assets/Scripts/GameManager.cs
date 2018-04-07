@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour {
 
 			player.AccelerationMax /= rapport;
 			
-			player.AngularVelocity *= 0.2f;
+			player.AngularVelocity *= 0.5f;
 
 			player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		}
