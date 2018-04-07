@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33f6694e9500b5a4baaf9aa18a71a379, type: 3}
   m_Name: CharacterMovementData
   m_EditorClassIdentifier: 
-  Acceleration: 0.18
-  MaxSpeed: 2
+  Acceleration: 0.2
+  MaxSpeed: 1.7
   JumpImpulseAcceleration: 5
   JumpButtonDuration: 0.5
   JumpVelocityLossCurve:
@@ -45,25 +45,25 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 1.1
+      value: 1.829541
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
       time: 0.15
-      value: 1
-      inSlope: -0.64168113
-      outSlope: -0.64168113
+      value: 1.3470795
+      inSlope: -2.5814388
+      outSlope: -2.5814388
       tangentMode: 0
     - serializedVersion: 2
       time: 0.9
-      value: 0.3
+      value: 0.32954103
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
       time: 1
-      value: 0.3
+      value: 0.32954103
       inSlope: 0
       outSlope: 0
       tangentMode: 0
