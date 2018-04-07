@@ -55,5 +55,5 @@ MonoBehaviour:
   Circles:
   - {fileID: 0}
   - {fileID: 0}
-  augmentationNbVent: 15
+  augmentationNbVent: 20
   augmentationVitesse: 15
