@@ -115,7 +115,7 @@ public class CharacterMovementController : MonoBehaviour
         }
         
 
-        if (Input.GetButton("Slide") && comboEnable)
+        if (Input.GetButton("Slide"))
         {
 
             if(grounded > 0 && !isJumping && !isSliding)
