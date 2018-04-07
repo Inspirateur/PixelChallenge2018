@@ -18,6 +18,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
+    private GameManager gm;
 
     private int grounded = 0;
     private bool isJumping = false;
@@ -30,12 +31,21 @@ public class CharacterMovementController : MonoBehaviour
         animator = GetComponent<Animator>();
         AngularVelocityMax = Data.MaxSpeed;
         AccelerationMax = Data.Acceleration;
-        // AngularVelocity = AccelerationMax * 4.0f;
+		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
     }
 	
 	void FixedUpdate ()
     {
-        
+        if(!gm.gameover){
+            FixedUpdateGame();
+        } else if(gm.victory){
+            FixedUpdateEndGameVictory();
+        } else {
+            FixedUpdateEndGameLose();
+        }
+    }
+
+    private void FixedUpdateGame(){
         if (Input.GetButton("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
             isJumping = true;
@@ -71,6 +81,16 @@ public class CharacterMovementController : MonoBehaviour
                 AngularVelocity + AccelerationMax * Data.AccelerationFactorOverSpeed.Evaluate(AngularVelocity / AngularVelocityMax) * Time.deltaTime);
         }
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
+    }
+
+    private void FixedUpdateEndGameVictory(){
+        
+        
+    }
+
+    private void FixedUpdateEndGameLose(){
+        
+        transform.RotateAround(Vector3.zero, Vector3.forward, 2.0f*Mathf.PI/3.0f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

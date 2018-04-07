@@ -50,30 +50,6 @@ public class Tempete : MonoBehaviour {
 	void Update () {
 
 		gererEclairBackground();
-
-		if(Input.GetKeyUp(KeyCode.V)){
-			ajouterVent();
-		}
-
-		if(Input.GetKeyUp(KeyCode.B)){
-			supprimerVent();
-		}
-
-		if(Input.GetKeyUp(KeyCode.R)){
-			augmenterVitesseRotation();
-		}
-
-		if(Input.GetKeyUp(KeyCode.T)){
-			diminuerVitesseRotation();
-		}
-
-		if(Input.GetKeyUp(KeyCode.D)){
-			resetTempete();
-		}
-
-		if(Input.GetKeyUp(KeyCode.S)){
-			startNextCercle();
-		}
 	}
 
     public static Tempete getInstance(){
