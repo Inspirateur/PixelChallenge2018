@@ -156,7 +156,7 @@ public class CharacterMovementController : MonoBehaviour
         if(isSliding){
             Vector3 exteriorVector = (transform.position - new Vector3(GravityData.Center.x, GravityData.Center.y)).normalized;
 
-            Vector2 forceToApply = exteriorVector * GravityData.Force * 0.9f * rb.mass;
+            Vector2 forceToApply = exteriorVector * GravityData.Force * rb.mass;
             if (!GravityData.IsAttraction || gm.gameover)
             {
                 forceToApply *= -1f;
