@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61330061059941680}
   - component: {fileID: 50876471399546676}
   - component: {fileID: 114812799744007336}
-  - component: {fileID: 114040613566175588}
+  - component: {fileID: 114520948508820890}
   m_Layer: 0
   m_Name: GroundShortLightBreakable
   m_TagString: Ground
@@ -89,7 +89,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3370376, y: 0.1603117}
   m_EdgeRadius: 0
---- !u!114 &114040613566175588
+--- !u!114 &114520948508820890
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205998286239638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c0b6cddee580474a8320c265db3a996, type: 3}
+  m_Script: {fileID: 11500000, guid: dbc4c832efb11584bb9af1c288c9f9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114812799744007336

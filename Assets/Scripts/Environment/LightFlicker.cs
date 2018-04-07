@@ -18,11 +18,17 @@ public class LightFlicker : MonoBehaviour
         SwitchOn();
     }
 
+    public void forceOff()
+    {
+        CancelInvoke();
+        SwitchOff();
+    }
+
     private void SwitchOn()
     {
         sprite.material.SetColor("_EmissionColor", emissiveColor);
         //sprite.color = new Color(1, 1, 1, 1);
-        if (Random.Range(0.0f, 1.0f) <= Data.FlickerProbability)
+        if (Random.Range(0.0f, 1.0f) < Data.FlickerProbability)
         {
             Invoke("SwitchOff", Data.FlickerFrequency);
         }

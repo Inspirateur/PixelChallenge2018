@@ -13,8 +13,11 @@ public class CharacterMovementController : MonoBehaviour
     [HideInInspector]
     public float AccelerationMax;
 
+    public LightFlickerData flickering;
     public CapsuleCollider2D StandUpCollider;
     public CapsuleCollider2D SlidingCollider;
+    public LightFlicker[] bodyParts;
+    private float secondesIntouchable = 1.5f;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -24,9 +27,14 @@ public class CharacterMovementController : MonoBehaviour
     private bool isJumping = false;
     private bool isSliding = false;
     private float firstTimeSlide;
+    private float timeEndInv;
+    private LightFlickerData normal_flicker_save;
+
 
     private void Awake()
     {
+        normal_flicker_save = bodyParts[0].Data;
+        timeEndInv = 0;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         AngularVelocityMax = Data.MaxSpeed;
@@ -42,6 +50,26 @@ public class CharacterMovementController : MonoBehaviour
             FixedUpdateEndGameVictory();
         } else {
             FixedUpdateEndGameLose();
+        }
+        if(timeEndInv < Time.time)
+        {
+            foreach(LightFlicker bodypart in bodyParts) {  
+                bodypart.Data = normal_flicker_save;
+            }
+        }
+    }
+
+    public void HitWall()
+    {
+        if (timeEndInv < Time.time) {
+            timeEndInv = Time.time + secondesIntouchable;
+            foreach (LightFlicker bodypart in bodyParts)
+            {
+                bodypart.Data = flickering;
+                bodypart.forceOff();
+            }
+            Debug.Log("ca touche");
+            AngularVelocity -= 4 / transform.position.magnitude / 2.5f;
         }
     }
 
