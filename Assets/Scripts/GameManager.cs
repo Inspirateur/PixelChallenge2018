@@ -97,8 +97,11 @@ public class GameManager : MonoBehaviour {
         
         Circles[currentCircle].ObjectNbr /= 4;
         Circles[currentCircle].Object = ExplosionPrefab;
+        Circles[currentCircle].cleanWalls();
 
-		modifierVitesseAngulaireMaxCouranteAcceleration();
+
+
+        modifierVitesseAngulaireMaxCouranteAcceleration();
 		initVariable();
         currentCircle++;
 	}
@@ -141,7 +144,6 @@ public class GameManager : MonoBehaviour {
 		diviseurAugmentationNbVent = player.AngularVelocityMax / augmentationNbVent;
 		diviseurAugmentationVitesse = player.AngularVelocityMax / augmentationVitesse;
 	}
-
 	private void modifierVitesseAngulaireMaxCouranteAcceleration(){
 		if(currentCircle + 1 < Circles.Length){
 			float rayonPrecedent = Circles[currentCircle].ObjectDistance;
