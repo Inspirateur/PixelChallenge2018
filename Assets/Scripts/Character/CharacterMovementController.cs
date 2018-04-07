@@ -114,7 +114,8 @@ public class CharacterMovementController : MonoBehaviour
         }
         
 
-        if (Input.GetButton("Slide")){
+        if (Input.GetButton("Slide") && comboEnable)
+        {
 
             if(grounded > 0 && !isJumping && !isSliding)
             {
@@ -153,7 +154,8 @@ public class CharacterMovementController : MonoBehaviour
 
         }
 
-        if(isSliding){
+        if(isSliding)
+        {
             Vector3 exteriorVector = (transform.position - new Vector3(GravityData.Center.x, GravityData.Center.y)).normalized;
 
             Vector2 forceToApply = exteriorVector * GravityData.Force * rb.mass;
