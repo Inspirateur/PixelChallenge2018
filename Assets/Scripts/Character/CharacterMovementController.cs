@@ -6,8 +6,12 @@ public class CharacterMovementController : MonoBehaviour
 {
 
     public CharacterMovementData Data;
-    public float AngularVelocity = 0f;
+    [HideInInspector]
+    public float AngularVelocity = 0.0f;
+    [HideInInspector]
     public float AngularVelocityMax;
+    [HideInInspector]
+    public float AccelerationMax;
 
     public CapsuleCollider2D StandUpCollider;
     public CapsuleCollider2D SlidingCollider;
@@ -27,11 +31,13 @@ public class CharacterMovementController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         AngularVelocityMax = Data.MaxSpeed;
+        AccelerationMax = Data.Acceleration;
+        // AngularVelocity = AccelerationMax * 4.0f;
     }
 	
 	void FixedUpdate ()
     {
-
+        
         if (Input.GetButtonDown("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
             // first jump frame from the ground
@@ -71,9 +77,12 @@ public class CharacterMovementController : MonoBehaviour
 
         if (!(isSliding || isJumping))
         {
-            AngularVelocity = Mathf.Min(AngularVelocityMax, AngularVelocity + Data.Acceleration * Time.deltaTime);
+            AngularVelocity =
+                Mathf.Min(AngularVelocityMax,
+                AngularVelocity + AccelerationMax * Data.AccelerationFactorOverSpeed.Evaluate(AngularVelocity / AngularVelocityMax) * Time.deltaTime);
         }
         transform.RotateAround(Vector3.zero, Vector3.forward, AngularVelocity);
+        Debug.Log(AngularVelocity);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
