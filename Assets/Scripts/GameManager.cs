@@ -72,18 +72,15 @@ public class GameManager : MonoBehaviour {
             if (i < currentCircle)
             {
                 Color c = Color.HSVToRGB(((float)i + 1) / Circles.Length, 1, 1);
-                Debug.Log(c);
                 Circles[i].CircleColor = c;
             }
             else if (i == currentCircle)
             {
                 Color c = Color.HSVToRGB(((float)i) / Circles.Length + getVitesseJoueur() / player.Data.MaxSpeed / Circles.Length, 1, 1);
-                Debug.Log(c);
                 Circles[i].CircleColor = c;
             } else
             {
                 Color c = Color.HSVToRGB(((float)i) / Circles.Length, 1, 1);
-                Debug.Log(c);
                 Circles[i].CircleColor = c;
             }
         }
@@ -97,9 +94,7 @@ public class GameManager : MonoBehaviour {
         
         Circles[currentCircle].ObjectNbr /= 4;
         Circles[currentCircle].Object = ExplosionPrefab;
-        Circles[currentCircle].cleanWalls();
-
-
+        Circles[currentCircle].CleanWalls();
 
         modifierVitesseAngulaireMaxCouranteAcceleration();
 		initVariable();
