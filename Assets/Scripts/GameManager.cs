@@ -37,38 +37,36 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(currentCircle <2){
-
-			Debug.Log (player.AngularVelocity);
-
-			if(getVitesseJoueur()>magnitudeVitessePrecedent){
-				//Debug.Log ("up");
-				float variation = getVitesseJoueur () - magnitudeVitessePrecedent;
-
-				diviseurActuelAugmentationNbVent += (variation / diviseurAugmentationNbVent);
-				spawnVent ((int)diviseurActuelAugmentationNbVent);
-				diviseurActuelAugmentationNbVent -= (int)diviseurActuelAugmentationNbVent;
-
-				diviseurActuelAugmentationVitesse += (variation / diviseurAugmentationVitesse);
-				addVitesseVent ((int)diviseurActuelAugmentationVitesse);
-				diviseurActuelAugmentationVitesse -= (int)diviseurActuelAugmentationVitesse;
 
 
-				magnitudeVitessePrecedent = getVitesseJoueur ();
+		if(getVitesseJoueur()>magnitudeVitessePrecedent){
+			//Debug.Log ("up");
+			float variation = getVitesseJoueur () - magnitudeVitessePrecedent;
+
+			diviseurActuelAugmentationNbVent += (variation / diviseurAugmentationNbVent);
+			spawnVent ((int)diviseurActuelAugmentationNbVent);
+			diviseurActuelAugmentationNbVent -= (int)diviseurActuelAugmentationNbVent;
+
+			diviseurActuelAugmentationVitesse += (variation / diviseurAugmentationVitesse);
+			addVitesseVent ((int)diviseurActuelAugmentationVitesse);
+			diviseurActuelAugmentationVitesse -= (int)diviseurActuelAugmentationVitesse;
 
 
-			}
+			magnitudeVitessePrecedent = getVitesseJoueur ();
 
-			//Color c = Color.HSVToRGB(getVitesseJoueur() / player.Data.MaxSpeed, 1, 1);
-			//Circles[currentCircle].CircleColor = c;
 
-			if((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
-				timer = Time.time+2;
-				Debug.Log ("END");
-				skipLevel ();
-
-			}
 		}
+
+		//Color c = Color.HSVToRGB(getVitesseJoueur() / player.Data.MaxSpeed, 1, 1);
+		//Circles[currentCircle].CircleColor = c;
+
+		if((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+			timer = Time.time+2;
+			//Debug.Log ("END");
+			skipLevel ();
+
+		}
+	
 
 
 	}
