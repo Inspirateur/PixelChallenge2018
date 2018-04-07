@@ -21,12 +21,13 @@ GameObject:
   - component: {fileID: 4750519244834236}
   - component: {fileID: 95161309109243080}
   - component: {fileID: 50919873558759190}
-  - component: {fileID: 61035600646355472}
   - component: {fileID: 114984061171742152}
   - component: {fileID: 114856045342994326}
+  - component: {fileID: 70901756211010312}
+  - component: {fileID: 70706430390686896}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -596,31 +597,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61035600646355472
-BoxCollider2D:
+--- !u!70 &70706430390686896
+CapsuleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1074037893484002}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.000000025377371, y: 0.21288083}
+  m_Size: {x: 10.000002, y: 3.0742433}
+  m_Direction: 1
+--- !u!70 &70901756211010312
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1074037893484002}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 8ff633de0fff9c840b5956186da03bd5, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.09563446}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 7.9749374, y: 9.837614}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 5, y: 10}
+  m_Direction: 0
 --- !u!95 &95161309109243080
 Animator:
   serializedVersion: 3
@@ -650,6 +656,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 89f31cfcb2ab1934687ec60a653bfe73, type: 2}
+  AngularVelocity: 0
+  StandUpCollider: {fileID: 70901756211010312}
+  SlidingCollider: {fileID: 70706430390686896}
 --- !u!114 &114984061171742152
 MonoBehaviour:
   m_ObjectHideFlags: 1

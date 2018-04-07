@@ -18,6 +18,7 @@ public class CharacterMovementController : MonoBehaviour
     private bool isJumping = false;
     private bool isSliding = false;
     private float firstJumpTime;
+    private float firstSlideTime;
     private float preJumpVelocity;
 
     private void Awake()
@@ -35,7 +36,7 @@ public class CharacterMovementController : MonoBehaviour
             firstJumpTime = Time.time;
             isJumping = true;
             AngularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
-            animator.SetTrigger("TakeOff");
+            animator.SetBool("IsJumping", true);
 
             // basic impulse force
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
@@ -43,18 +44,19 @@ public class CharacterMovementController : MonoBehaviour
 
         if (Input.GetButtonDown("Slide") && grounded > 0 && !isJumping && !isSliding)
         {
+            firstSlideTime = Time.time;
             isSliding = true;
-            StandUpCollider.enabled = false;
             SlidingCollider.enabled = true;
-            animator.SetTrigger("Slide");
+            StandUpCollider.enabled = false;
+            animator.SetBool("IsSliding", true);
         }
 
-        if (Input.GetButtonUp("Slide"))
+        if (isSliding && (Input.GetButtonUp("Slide") || (Time.time - firstSlideTime > Data.SlideMaxDuration)))
         {
-            isSliding = true;
+            isSliding = false;
             StandUpCollider.enabled = true;
             SlidingCollider.enabled = false;
-            animator.SetTrigger("GetUp");
+            animator.SetBool("IsSliding", false);
         }
 
         // still in jump frames
@@ -79,7 +81,7 @@ public class CharacterMovementController : MonoBehaviour
             if (isJumping && !(Input.GetButton("Jump") && (Time.time - firstJumpTime) < Data.JumpButtonDuration))
             {
                 isJumping = false;
-                animator.SetTrigger("Landing");
+                animator.SetBool("IsJumping", false);
                 AngularVelocity = preJumpVelocity;
             }
 
