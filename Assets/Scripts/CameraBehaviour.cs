@@ -10,13 +10,13 @@ public class CameraBehaviour : MonoBehaviour {
 	private Vector3 velocityEnd = Vector3.zero ;
 	private float distanceFocusDesiree;
 	private float initial;
-	private Vector3 posInitial;
+	// private Vector3 posInitial;
 
 	// Use this for initialization
 	void Start () {
 		gm = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager> ();
 		initial = this.transform.position.z;
-		posInitial = this.transform.position;
+		// posInitial = this.transform.position;
 	}
 
 	// Update is called once per frame
@@ -46,15 +46,13 @@ public class CameraBehaviour : MonoBehaviour {
 
 	private void UpdateEndGame(){
 		transform.up = Vector3.up;
-		distanceFocusDesiree = (gm.getCircleCourant ().ObjectDistance * 2.0f);
+		distanceFocusDesiree = (gm.getCircleCourant ().ObjectDistance * 4.0f);
 	
-		Vector3 posDesire = posInitial;
-		posDesire.z -= distanceFocusDesiree;
+		Vector3 posDesire = Vector3.zero;
+		posDesire.z -= distanceFocusDesiree + initial;
 
 		Vector3 pos = Vector3.SmoothDamp (this.transform.position, posDesire, ref velocityEnd, 1.0f, 1.0f);
 
 		this.transform.position = pos;
 	}
 }
-
-//Camera.main.transform.position = Vector3.SmoothDamp (Camera.main.transform.position, pos, ref velocity, 0.01f,dureeAcces);

@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
 
 	private float timer;
 	public bool gameover;
+	public bool victory;
 
 	private Camera cam;
 
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gameover = false;
+		victory = false;
 		tempete = Tempete.getInstance ();
 		initVariable ();
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
@@ -53,8 +55,10 @@ public class GameManager : MonoBehaviour {
 
 		if(!gameover){
 			UpdateGame();
+		} else if(victory){
+			UpdateEndGameVictory();
 		} else {
-			UpdateEndGame();
+			UpdateEndGameLose();
 		}
 
 	}
@@ -103,9 +107,17 @@ public class GameManager : MonoBehaviour {
                 Circles[i].CircleColor = c;
             }
         }
+
+		if(Input.GetKeyUp(KeyCode.K)){
+			endGameLose();
+		}
 	}
 
-	private void UpdateEndGame(){
+	private void UpdateEndGameVictory(){
+		
+	}
+
+	private void UpdateEndGameLose(){
 		
 	}
 
@@ -200,7 +212,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	private void endGameVictory(){
-		Debug.Log("endGameVictory");
+		victory = true;
 		gameover = true;
 		cam.gameObject.transform.SetParent(null);
 		tempete.lancerGrosEclair();
@@ -208,5 +220,21 @@ public class GameManager : MonoBehaviour {
 		Circles[currentCircle].Object = ExplosionPrefab;
 		Circles[currentCircle].CleanWalls();
 		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
+		player.AngularVelocityMax = 0.0f;
+	}
+
+	private void endGameLose(){
+		victory = false;
+		gameover = true;
+		cam.gameObject.transform.SetParent(null);
+
+		// destroy all circles
+		for(int i=currentCircle; i<Circles.Length; i++){
+			Circles[i].ObjectNbr /= 4;
+			Circles[i].Object = ExplosionPrefab;
+			Circles[i].CleanWalls();
+		}
+
+		player.AngularVelocityMax = player.Data.MaxSpeed / (currentCircle+1.0f);
 	}
 }
