@@ -88,8 +88,25 @@ public class Tempete : MonoBehaviour {
 		Instantiate(ventPrefab, player.transform.position, quat, this.transform.GetChild(indiceCercleActuel));
 	}
 
+	public void ajouterVentRandom(){
+
+		Vector3 posi = this.transform.position
+		+ (Quaternion.Euler(0.0f, 0.0f, 360.0f * Random.value) * (this.transform.up * (indiceCercleActuel * 4.0f + 4.0f * Random.value)));
+
+		Vector3 toCenter = (posi - this.transform.position).normalized;
+
+		Vector3 forwardVent = Vector3.Cross(toCenter, Vector3.forward);
+
+		Instantiate(ventPrefab, posi, Quaternion.LookRotation(forwardVent, Vector3.forward), this.transform.GetChild(indiceCercleActuel));
+	}
+
 	public void augmenterVitesseRotation(){
-		rb.AddTorque(0.0f, 0.0f, 5.0f, ForceMode.Acceleration);
+		rb.AddTorque(0.0f, 0.0f, 10.0f, ForceMode.Acceleration);
+	}
+
+	public void setVitesseRotation(float vitesse){
+		rb.angularVelocity = new Vector3(0f,0f,0f);
+		rb.AddTorque(0.0f, 0.0f, vitesse, ForceMode.Acceleration);
 	}
 
 	public void supprimerVent(){
@@ -100,7 +117,7 @@ public class Tempete : MonoBehaviour {
 	}
 
 	public void diminuerVitesseRotation(){
-		rb.AddTorque(0.0f, 0.0f, -5.0f, ForceMode.Acceleration);
+		rb.AddTorque(0.0f, 0.0f, -10.0f, ForceMode.Acceleration);
 	}
 
 	public void resetTempete(){
@@ -115,12 +132,15 @@ public class Tempete : MonoBehaviour {
 	}
 
 	public void startNextCercle(){
+		startNextCercleScripte();
+		lancerGrosEclair();
+	}
+
+	public void startNextCercleScripte(){
 		indiceCercleActuel++;
-//		player.transform.Translate(new Vector3(10.0f, 0.0f, 0.0f));
 		initNewCercle();
 		frequenceEclairMin *= 1.0f - ratioAugmentationFrequenceEclair;
 		frequenceEclairMax *= 1.0f - ratioAugmentationFrequenceEclair;
-		lancerGrosEclair();
 	}
 
 	private void initNewCercle(){
@@ -140,16 +160,22 @@ public class Tempete : MonoBehaviour {
 		timerEclair = Time.time + frequenceEclairMin + (frequenceEclairMax - frequenceEclairMin) * Random.value;
 
 		DigitalRuby.LightningBolt.LightningBoltScript eclair = 
-			Instantiate(eclairPrefab, player.transform.position, Quaternion.identity, this.transform)
+			Instantiate(eclairPrefab, this.transform.position, Quaternion.identity, this.transform)
 			.gameObject.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>();
 
-		eclair.StartPosition = this.transform.position
-			+ new Vector3(10.0f, 0.0f, 0.0f) * (Random.value - 0.5f)
-			+ new Vector3(0.0f, 10.0f, 0.0f) * (Random.value - 0.5f);
+		// eclair.StartPosition = this.transform.position
+		// 	+ new Vector3(10.0f, 0.0f, 0.0f) * (Random.value - 0.5f)
+		// 	+ new Vector3(0.0f, 10.0f, 0.0f) * (Random.value - 0.5f);
 
-		eclair.EndPosition =
-			Quaternion.Euler(0.0f, 0.0f, 80.0f * (Random.value - 0.5f))
-			* (player.transform.position + player.transform.forward * 10.0f * (Random.value - 0.5f));
+		// eclair.EndPosition =
+		// 	Quaternion.Euler(0.0f, 0.0f, 80.0f * (Random.value - 0.5f))
+		// 	* (player.transform.position + player.transform.forward * 10.0f * (Random.value - 0.5f));
+
+		eclair.StartPosition = this.transform.position
+		+ (Quaternion.Euler(0.0f, 0.0f, 360.0f * Random.value) * this.transform.up * (indiceCercleActuel+1) * 4.0f * Random.value);
+
+		eclair.EndPosition = this.transform.position
+		+ (Quaternion.Euler(0.0f, 0.0f, 360.0f * Random.value) * this.transform.up * (indiceCercleActuel+1) * 4.0f * Random.value);
 	}
 
     private void gererEclairBackground()
