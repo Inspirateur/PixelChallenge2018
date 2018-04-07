@@ -33,13 +33,7 @@ public class CameraBehaviour : MonoBehaviour {
 	void LateUpdate(){
 		
 		if(!gm.gameover){
-<<<<<<< HEAD
 			UpdateGame();
-=======
-			if(!FollowPlayer){
-				UpdateGame();
-			}
->>>>>>> 94bc4eaa80ea80ec5278a3cacf1d1ed88daa6d47
 		} else {
 			UpdateEndGame();
 		}
