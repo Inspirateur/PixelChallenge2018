@@ -67,8 +67,31 @@ public class GameManager : MonoBehaviour {
 		} else {
 			UpdateEndGameLose();
 		}
-
+        UpdateCircleColor();
 	}
+
+    private void UpdateCircleColor()
+    {
+
+        // set circles color
+        for (int i = 0; i < Circles.Length; ++i)
+        {
+            if (i < currentCircle)
+            {
+                Color c = Color.HSVToRGB(((float)i + 1) / Circles.Length, 1, 1);
+                Circles[i].CircleColor = c;
+            }
+            else if (i == currentCircle)
+            {
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length + Mathf.Max(0, getPercent() / Circles.Length), 1, 1);
+                Circles[i].CircleColor = c;
+            } else
+            {
+                Color c = Color.HSVToRGB(((float)i) / Circles.Length, 1, 1);
+                Circles[i].CircleColor = c;
+            }
+        }
+    }
 
 	private void UpdateGame(){
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
@@ -94,26 +117,7 @@ public class GameManager : MonoBehaviour {
 			//Debug.Log ("END");
 			skipLevel ();
 
-		}    
-        
-        // set circles color
-        for (int i = 0; i < Circles.Length; ++i)
-        {
-            if (i < currentCircle)
-            {
-                Color c = Color.HSVToRGB(((float)i + 1) / Circles.Length, 1, 1);
-                Circles[i].CircleColor = c;
-            }
-            else if (i == currentCircle)
-            {
-                Color c = Color.HSVToRGB(((float)i) / Circles.Length + getPercent() / Circles.Length, 1, 1);
-                Circles[i].CircleColor = c;
-            } else
-            {
-                Color c = Color.HSVToRGB(((float)i) / Circles.Length, 1, 1);
-                Circles[i].CircleColor = c;
-            }
-        }
+		}
 
 		if(Input.GetKeyUp(KeyCode.K)){
 			endGameLose();
@@ -233,7 +237,6 @@ public class GameManager : MonoBehaviour {
 		Circles[currentCircle].Object = ExplosionPrefab;
 		Circles[currentCircle].CleanWalls();
 		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
-		player.AngularVelocityMax = 0.0f;
 		setScore ();
 	}
 
