@@ -6,6 +6,7 @@ using UnityEngine;
 public class CircleGenerator : Neon {
 
 	public GameObject Object;
+    public AudioClip ExplosionSound;
 	public int ObjectNbr = 10;
 	public float ObjectDistance = 3;
 
@@ -46,6 +47,7 @@ public class CircleGenerator : Neon {
 
     public void CleanWalls()
     {
+        AudioSource.PlayClipAtPoint(ExplosionSound, transform.position);
         foreach (WallGenerator child in GetComponentsInChildren<WallGenerator>())
         {
             Destroy(child.gameObject);
