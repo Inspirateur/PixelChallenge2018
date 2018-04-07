@@ -49,7 +49,8 @@ public class EndGameMenuController : MonoBehaviour
 
     public void DisplayMenu()
     {
-        GetComponentInChildren<CanvasRenderer>().SetAlpha(0f);
+		gameObject.transform.GetChild (0).gameObject.SetActive (true);
+		GetComponentInChildren<CanvasRenderer> ().SetAlpha(0.0f);
         displayTime = Time.time;
         isDisplayed = true;
     }
