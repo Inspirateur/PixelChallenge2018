@@ -26,8 +26,8 @@ public class GameController : MonoBehaviour {
 
 	}
 
-	public void submitPlayerScoring(int newScore){
-		if(newScore > playerScoring.highScore)
+	public void submitPlayerScoring(float newScore){
+		if(newScore < playerScoring.highScore)
 		{
 			playerScoring.highScore = newScore;
 			SaveGameData ();
@@ -49,6 +49,7 @@ public class GameController : MonoBehaviour {
 		}
 		else
 		{
+			playerScoring.highScore = 9999.9f;
 			string dataAsJson = JsonUtility.ToJson (playerScoring);
 			File.WriteAllText (filePath, dataAsJson);
 		}
