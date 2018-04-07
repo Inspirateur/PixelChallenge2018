@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-
+	private EndGameMenuController endMenu;
 
 	public CharacterMovementController player;
 
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour {
 		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		time = 0;
+		endMenu = GameObject.FindGameObjectWithTag ("EndGameMenuContainer").GetComponent<EndGameMenuController> ();
 
 	}
 	
@@ -238,6 +239,7 @@ public class GameManager : MonoBehaviour {
 		Circles[currentCircle].CleanWalls();
 		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		setScore ();
+		endMenu.DisplayWinMenu (time, bestTime);
 	}
 
 	private void endGameLose(){
@@ -253,6 +255,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 		player.AngularVelocityMax = player.Data.MaxSpeed / (currentCircle+1.0f);
+		endMenu.DisplayLossMenu ();
 	}
 
 	public void setScore(){
