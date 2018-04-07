@@ -6,6 +6,7 @@ public class CharacterMovementController : MonoBehaviour
 {
 
     public CharacterMovementData Data;
+    public CustomGravityData GravityData;
     [HideInInspector]
     public float AngularVelocity = 0.0f;
     [HideInInspector]
@@ -24,6 +25,7 @@ public class CharacterMovementController : MonoBehaviour
     private bool isJumping = false;
     private bool isSliding = false;
     private float firstTimeSlide;
+    private float timerNextJump;
 
     private void Awake()
     {
@@ -46,21 +48,52 @@ public class CharacterMovementController : MonoBehaviour
     }
 
     private void FixedUpdateGame(){
+        
         if (Input.GetButton("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
             isJumping = true;
             animator.SetBool("IsJumping", true);
             
             rb.AddRelativeForce(Vector3.up * Data.JumpImpulseAcceleration * rb.mass, ForceMode2D.Impulse);
+            timerNextJump = Time.fixedTime + 0.2f;
         }
 
-        if (Input.GetButton("Slide") && grounded > 0 && !isJumping && !isSliding)
-        {
-            firstTimeSlide = Time.time;
-            isSliding = true;
-            SlidingCollider.enabled = true;
-            StandUpCollider.enabled = false;
-            animator.SetBool("IsSliding", true);
+        if (Input.GetButton("Slide")){
+
+            if(grounded > 0 && !isJumping && !isSliding)
+            {
+                firstTimeSlide = Time.time;
+                isSliding = true;
+                SlidingCollider.enabled = true;
+                StandUpCollider.enabled = false;
+                animator.SetBool("IsSliding", true);
+            }
+            else if(isJumping && !isSliding)
+            {
+                Debug.Log("slide in the air");
+                rb.velocity *= 0.2f;
+                firstTimeSlide = Time.time;
+                isSliding = true;
+                isJumping = false;
+                SlidingCollider.enabled = true;
+                StandUpCollider.enabled = false;
+                animator.SetBool("IsSliding", true);
+                animator.SetBool("IsJumping", false);
+                animator.Play("slide");
+            }
+
+        }
+
+        if(isSliding){
+            Vector3 exteriorVector = (transform.position - new Vector3(GravityData.Center.x, GravityData.Center.y)).normalized;
+
+            Vector2 forceToApply = exteriorVector * GravityData.Force * 0.8f * rb.mass;
+            if (!GravityData.IsAttraction || gm.gameover)
+            {
+                forceToApply *= -1f;
+            }
+
+            rb.AddForce(forceToApply);
         }
 
         if (isSliding && Time.time - firstTimeSlide > Data.SlideMaxDuration)
@@ -74,7 +107,7 @@ public class CharacterMovementController : MonoBehaviour
         animator.SetFloat("VerticalVelocity", Vector3.Project(rb.velocity, transform.up).magnitude * Mathf.Sign(Vector3.Dot(rb.velocity, transform.up)));
         animator.SetFloat("RunningSpeed", AngularVelocity * transform.position.magnitude / 2.5f);
 
-        if (!(isSliding || isJumping))
+        if (!(/*isSliding || */isJumping))
         {
             AngularVelocity =
                 Mathf.Min(AngularVelocityMax,
@@ -97,7 +130,7 @@ public class CharacterMovementController : MonoBehaviour
     {
         if (collision.collider.tag == "Ground")
         {
-            if (isJumping)
+            if (isJumping && Time.fixedTime >= timerNextJump)
             {
                 isJumping = false;
                 animator.SetBool("IsJumping", false);
