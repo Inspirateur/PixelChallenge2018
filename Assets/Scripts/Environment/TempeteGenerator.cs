@@ -30,7 +30,7 @@ public class TempeteGenerator : MonoBehaviour {
 			tempete.ajouterVentRandom();
 			numVent++;
 		} else if(numCercle < nombreCercle){
-			tempete.startNextCercle();
+			tempete.startNextCercleScripte();
 			numCercle++;
 			numVent = 0;
 			maxVent = incrementVentParCercle*(numCercle+1);

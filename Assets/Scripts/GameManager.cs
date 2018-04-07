@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+
+
 	public CharacterMovementController player;
 
     public GameObject ExplosionPrefab;
@@ -28,19 +30,36 @@ public class GameManager : MonoBehaviour {
 	private int compteurActuelVitesse;
 
 	private float timer;
+	public bool gameover;
+
+	private Camera cam;
+
+
 
 
 
 	// Use this for initialization
 	void Start () {
+		gameover = false;
 		tempete = Tempete.getInstance ();
 		initVariable ();
+		cam = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// Debug.Log(player.AngularVelocity);
 
+		if(!gameover){
+			UpdateGame();
+		} else {
+			UpdateEndGame();
+		}
+
+	}
+
+	private void UpdateGame(){
 		if(getVitesseJoueur()>magnitudeVitessePrecedent){
 			//Debug.Log ("up");
 			float variation = getVitesseJoueur () - magnitudeVitessePrecedent;
@@ -59,7 +78,7 @@ public class GameManager : MonoBehaviour {
 
 		}
 
-        if ((this.player.Data.MaxSpeed * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
+        if ((this.player.AngularVelocityMax * 0.98)<=this.getVitesseJoueur() && Time.time>timer){
 			timer = Time.time+2;
 			//Debug.Log ("END");
 			skipLevel ();
@@ -84,25 +103,33 @@ public class GameManager : MonoBehaviour {
                 Circles[i].CircleColor = c;
             }
         }
+	}
 
+	private void UpdateEndGame(){
+		
 	}
 
 	private void skipLevel(){
-		tempete.startNextCercle ();
 
-		initVariable ();
-        
-        Circles[currentCircle].ObjectNbr /= 4;
-        Circles[currentCircle].Object = ExplosionPrefab;
-        Circles[currentCircle].CleanWalls();
+		// on passe au prochain cercle car il existe
+		if(currentCircle + 1 < Circles.Length){
+			tempete.startNextCercle ();
+			
+			Circles[currentCircle].ObjectNbr /= 4;
+			Circles[currentCircle].Object = ExplosionPrefab;
+			Circles[currentCircle].CleanWalls();
 
-        modifierVitesseAngulaireMaxCouranteAcceleration();
-		initVariable();
-        currentCircle++;
+			modifierVitesseAngulaireMaxCouranteAcceleration();
+			initVariable();
+			currentCircle++;
+		}
+		else {
+			endGameVictory();
+		}
 	}
 
 
-	private float getVitesseJoueur(){
+	public float getVitesseJoueur(){
 		return player.AngularVelocity;
 	}
 
@@ -158,5 +185,28 @@ public class GameManager : MonoBehaviour {
 
 			player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 		}
+	}
+
+	public CircleGenerator getCircleCourant(){
+		return Circles [currentCircle];
+	}
+
+	public Vector3 getPosPlayer(){
+		return player.gameObject.transform.position;
+	}
+
+	public float getPercent(){
+		return getVitesseJoueur () / player.AngularVelocityMax;
+	}
+
+	private void endGameVictory(){
+		Debug.Log("endGameVictory");
+		gameover = true;
+		cam.gameObject.transform.SetParent(null);
+		tempete.lancerGrosEclair();
+		Circles[currentCircle].ObjectNbr /= 4;
+		Circles[currentCircle].Object = ExplosionPrefab;
+		Circles[currentCircle].CleanWalls();
+		player.gameObject.GetComponent<Rigidbody2D>().AddForce(player.transform.up * -4.0f + player.transform.right * 2.0f, ForceMode2D.Impulse);
 	}
 }
