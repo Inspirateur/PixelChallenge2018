@@ -22,8 +22,6 @@ public class CharacterMovementController : MonoBehaviour
     private int grounded = 0;
     private bool isJumping = false;
     private bool isSliding = false;
-    private float firstJumpTime;
-    private float firstSlideTime;
     private float preJumpVelocity;
 
     private void Awake()
@@ -40,8 +38,6 @@ public class CharacterMovementController : MonoBehaviour
         
         if (Input.GetButton("Jump") && grounded > 0 && !isJumping && !isSliding)
         {
-            // first jump frame from the ground
-            firstJumpTime = Time.time;
             isJumping = true;
             AngularVelocity *= Data.JumpVelocityLossCurve.Evaluate(0f);
             animator.SetBool("IsJumping", true);
@@ -52,7 +48,6 @@ public class CharacterMovementController : MonoBehaviour
 
         if (Input.GetButton("Slide") && grounded > 0 && !isJumping && !isSliding)
         {
-            firstSlideTime = Time.time;
             isSliding = true;
             SlidingCollider.enabled = true;
             StandUpCollider.enabled = false;

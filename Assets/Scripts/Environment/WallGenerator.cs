@@ -27,7 +27,7 @@ public class WallGenerator : Neon {
             {
                 children.AddLast(child);
             }
-            foreach (Transform child in children)
+            foreach (Transform child in children) 
             {
                 DestroyImmediate(child.gameObject);
             }
