@@ -48,7 +48,6 @@ public class CircleGenerator : Neon {
     {
         foreach (WallGenerator child in GetComponentsInChildren<WallGenerator>())
         {
-            Debug.Log("WALLAH SI TU PASSE ICI T'ES MORT");
             Destroy(child.gameObject);
         }
     }
