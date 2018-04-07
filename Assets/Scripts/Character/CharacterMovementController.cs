@@ -84,7 +84,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void FixedUpdateGame(){
         
-        if (Input.GetButton("Jump") && comboEnable)
+        if (Input.GetButton("Jump"))
         {
             if(grounded > 0 && !isJumping && !isSliding)
             {
