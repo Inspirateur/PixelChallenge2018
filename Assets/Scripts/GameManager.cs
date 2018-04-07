@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour {
 
 	private EndGameMenuController endMenu;
 
 	public CharacterMovementController player;
+    public GameObject timerText;
 
     public GameObject ExplosionPrefab;
 
@@ -60,7 +62,9 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// Debug.Log(player.AngularVelocity);
+        // Debug.Log(player.AngularVelocity);
+
+        timerText.GetComponent<TextMeshPro>().text = ((int) time / 60).ToString("00") + ":" + Mathf.Floor(time % 60).ToString("00"); 
 
 		if(!gameover){
 			time += Time.deltaTime;
