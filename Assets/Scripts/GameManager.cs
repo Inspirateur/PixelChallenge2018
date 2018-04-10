@@ -48,7 +48,8 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		enoughtSpeedToDie = false;
+        Cursor.visible = false;
+        enoughtSpeedToDie = false;
 		gameover = false;
 		victory = false;
 		tempete = Tempete.getInstance ();
@@ -247,8 +248,10 @@ public class GameManager : MonoBehaviour {
 		return getVitesseJoueur () / player.AngularVelocityMax;
 	}
 
-	private void endGameVictory(){
-		victory = true;
+	private void endGameVictory()
+    {
+        Cursor.visible = true;
+        victory = true;
 		gameover = true;
 		cam.gameObject.transform.SetParent(null);
 		tempete.lancerGrosEclair();
@@ -260,8 +263,10 @@ public class GameManager : MonoBehaviour {
 		endMenu.DisplayWinMenu (time, bestTime);
 	}
 
-	private void endGameLose(){
-		victory = false;
+	private void endGameLose()
+    {
+        Cursor.visible = true;
+        victory = false;
 		gameover = true;
 		cam.gameObject.transform.SetParent(null);
 
