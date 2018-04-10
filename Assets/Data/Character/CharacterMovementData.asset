@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f6694e9500b5a4baaf9aa18a71a379, type: 3}
+  m_Name: CharacterMovementData
+  m_EditorClassIdentifier: 
+  Acceleration: 0.2
+  MaxSpeed: 1.7
+  JumpImpulseAcceleration: 5.2
+  SlideMaxDuration: 0.5
+  AccelerationFactorOverSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1.829541
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.15
+      value: 1.3470795
+      inSlope: -2.5814388
+      outSlope: -2.5814388
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9
+      value: 0.32954103
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0.32954103
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  HitSound: {fileID: 8300000, guid: ef5783af16244144082ea2938cd75918, type: 3}
+  JumpSound: {fileID: 8300000, guid: c770042a12617eb4aa6d6bbf39180c74, type: 3}
+  SlideSound: {fileID: 8300000, guid: 1acf4a21cc12e874b98285cfb3733ea8, type: 3}
